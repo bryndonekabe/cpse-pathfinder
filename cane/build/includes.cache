@@ -1,0 +1,333 @@
+[
+  {
+    "added_include_path": "/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/cores/esp32"
+  },
+  {
+    "added_include_path": "/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/variants/esp32"
+  },
+  {
+    "compile": {
+      "source_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/src.ino.cpp",
+      "object_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/src.ino.cpp.o",
+      "depfile_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/src.ino.cpp.d"
+    },
+    "compile_task": {
+      "args": [
+        "/home/bryndon/.arduino15/packages/esp32/tools/esp-x32/2601/bin/xtensa-esp32-elf-g++",
+        "-c",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/cpp_flags",
+        "-w",
+        "-Os",
+        "-Werror=return-type",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-DF_CPU=240000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_ESP32_DEV",
+        "-DARDUINO_ARCH_ESP32",
+        "-DARDUINO_BOARD=\"ESP32_DEV\"",
+        "-DARDUINO_VARIANT=\"esp32\"",
+        "-DARDUINO_PARTITION_default",
+        "-DARDUINO_HOST_OS=\"linux\"",
+        "-DARDUINO_FQBN=\"esp32:esp32:esp32\"",
+        "-DESP32=ESP32",
+        "-DCORE_DEBUG_LEVEL=0",
+        "-DARDUINO_RUNNING_CORE=1",
+        "-DARDUINO_EVENT_RUNNING_CORE=1",
+        "-DARDUINO_USB_CDC_ON_BOOT=0",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/defines",
+        "-I/home/bryndon/Devel/cpp/cpse-pathfinder/cane/src",
+        "-iprefix",
+        "/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/includes",
+        "-I/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/qio_qspi/include",
+        "-I/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/cores/esp32",
+        "-I/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/variants/esp32",
+        "@/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/build_opt.h",
+        "@/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/file_opts",
+        "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/src.ino.cpp",
+        "-o",
+        "/dev/null"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/main.cpp",
+      "object_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/main.cpp.o",
+      "depfile_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/main.cpp.d"
+    },
+    "compile_task": {
+      "args": [
+        "/home/bryndon/.arduino15/packages/esp32/tools/esp-x32/2601/bin/xtensa-esp32-elf-g++",
+        "-c",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/cpp_flags",
+        "-w",
+        "-Os",
+        "-Werror=return-type",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-DF_CPU=240000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_ESP32_DEV",
+        "-DARDUINO_ARCH_ESP32",
+        "-DARDUINO_BOARD=\"ESP32_DEV\"",
+        "-DARDUINO_VARIANT=\"esp32\"",
+        "-DARDUINO_PARTITION_default",
+        "-DARDUINO_HOST_OS=\"linux\"",
+        "-DARDUINO_FQBN=\"esp32:esp32:esp32\"",
+        "-DESP32=ESP32",
+        "-DCORE_DEBUG_LEVEL=0",
+        "-DARDUINO_RUNNING_CORE=1",
+        "-DARDUINO_EVENT_RUNNING_CORE=1",
+        "-DARDUINO_USB_CDC_ON_BOOT=0",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/defines",
+        "-I/home/bryndon/Devel/cpp/cpse-pathfinder/cane/src",
+        "-iprefix",
+        "/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/includes",
+        "-I/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/qio_qspi/include",
+        "-I/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/cores/esp32",
+        "-I/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/variants/esp32",
+        "@/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/build_opt.h",
+        "@/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/file_opts",
+        "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/main.cpp",
+        "-o",
+        "/dev/null"
+      ]
+    }
+  },
+  {
+    "missing_include_h": "DFRobot_MatrixLidar.h"
+  },
+  {
+    "added_include_path": "/home/bryndon/Arduino/libraries/DFRobot_MatrixLidar"
+  },
+  {
+    "compile": {
+      "source_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/main.cpp",
+      "object_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/main.cpp.o",
+      "depfile_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/main.cpp.d"
+    },
+    "compile_task": {
+      "args": [
+        "/home/bryndon/.arduino15/packages/esp32/tools/esp-x32/2601/bin/xtensa-esp32-elf-g++",
+        "-c",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/cpp_flags",
+        "-w",
+        "-Os",
+        "-Werror=return-type",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-DF_CPU=240000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_ESP32_DEV",
+        "-DARDUINO_ARCH_ESP32",
+        "-DARDUINO_BOARD=\"ESP32_DEV\"",
+        "-DARDUINO_VARIANT=\"esp32\"",
+        "-DARDUINO_PARTITION_default",
+        "-DARDUINO_HOST_OS=\"linux\"",
+        "-DARDUINO_FQBN=\"esp32:esp32:esp32\"",
+        "-DESP32=ESP32",
+        "-DCORE_DEBUG_LEVEL=0",
+        "-DARDUINO_RUNNING_CORE=1",
+        "-DARDUINO_EVENT_RUNNING_CORE=1",
+        "-DARDUINO_USB_CDC_ON_BOOT=0",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/defines",
+        "-I/home/bryndon/Devel/cpp/cpse-pathfinder/cane/src",
+        "-iprefix",
+        "/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/includes",
+        "-I/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/qio_qspi/include",
+        "-I/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/cores/esp32",
+        "-I/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/variants/esp32",
+        "-I/home/bryndon/Arduino/libraries/DFRobot_MatrixLidar",
+        "@/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/build_opt.h",
+        "@/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/file_opts",
+        "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/main.cpp",
+        "-o",
+        "/dev/null"
+      ]
+    }
+  },
+  {
+    "missing_include_h": "Wire.h"
+  },
+  {
+    "added_include_path": "/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/libraries/Wire/src"
+  },
+  {
+    "compile": {
+      "source_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/main.cpp",
+      "object_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/main.cpp.o",
+      "depfile_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/main.cpp.d"
+    },
+    "compile_task": {
+      "args": [
+        "/home/bryndon/.arduino15/packages/esp32/tools/esp-x32/2601/bin/xtensa-esp32-elf-g++",
+        "-c",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/cpp_flags",
+        "-w",
+        "-Os",
+        "-Werror=return-type",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-DF_CPU=240000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_ESP32_DEV",
+        "-DARDUINO_ARCH_ESP32",
+        "-DARDUINO_BOARD=\"ESP32_DEV\"",
+        "-DARDUINO_VARIANT=\"esp32\"",
+        "-DARDUINO_PARTITION_default",
+        "-DARDUINO_HOST_OS=\"linux\"",
+        "-DARDUINO_FQBN=\"esp32:esp32:esp32\"",
+        "-DESP32=ESP32",
+        "-DCORE_DEBUG_LEVEL=0",
+        "-DARDUINO_RUNNING_CORE=1",
+        "-DARDUINO_EVENT_RUNNING_CORE=1",
+        "-DARDUINO_USB_CDC_ON_BOOT=0",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/defines",
+        "-I/home/bryndon/Devel/cpp/cpse-pathfinder/cane/src",
+        "-iprefix",
+        "/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/includes",
+        "-I/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/qio_qspi/include",
+        "-I/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/cores/esp32",
+        "-I/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/variants/esp32",
+        "-I/home/bryndon/Arduino/libraries/DFRobot_MatrixLidar",
+        "-I/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/libraries/Wire/src",
+        "@/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/build_opt.h",
+        "@/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/file_opts",
+        "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/sketch/main.cpp",
+        "-o",
+        "/dev/null"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "/home/bryndon/Arduino/libraries/DFRobot_MatrixLidar/DFRobot_MatrixLidar.cpp",
+      "object_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/libraries/DFRobot_MatrixLidar/DFRobot_MatrixLidar.cpp.o",
+      "depfile_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/libraries/DFRobot_MatrixLidar/DFRobot_MatrixLidar.cpp.d"
+    },
+    "compile_task": {
+      "args": [
+        "/home/bryndon/.arduino15/packages/esp32/tools/esp-x32/2601/bin/xtensa-esp32-elf-g++",
+        "-c",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/cpp_flags",
+        "-w",
+        "-Os",
+        "-Werror=return-type",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-DF_CPU=240000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_ESP32_DEV",
+        "-DARDUINO_ARCH_ESP32",
+        "-DARDUINO_BOARD=\"ESP32_DEV\"",
+        "-DARDUINO_VARIANT=\"esp32\"",
+        "-DARDUINO_PARTITION_default",
+        "-DARDUINO_HOST_OS=\"linux\"",
+        "-DARDUINO_FQBN=\"esp32:esp32:esp32\"",
+        "-DESP32=ESP32",
+        "-DCORE_DEBUG_LEVEL=0",
+        "-DARDUINO_RUNNING_CORE=1",
+        "-DARDUINO_EVENT_RUNNING_CORE=1",
+        "-DARDUINO_USB_CDC_ON_BOOT=0",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/defines",
+        "-I/home/bryndon/Devel/cpp/cpse-pathfinder/cane/src",
+        "-iprefix",
+        "/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/includes",
+        "-I/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/qio_qspi/include",
+        "-I/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/cores/esp32",
+        "-I/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/variants/esp32",
+        "-I/home/bryndon/Arduino/libraries/DFRobot_MatrixLidar",
+        "-I/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/libraries/Wire/src",
+        "@/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/build_opt.h",
+        "@/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/file_opts",
+        "/home/bryndon/Arduino/libraries/DFRobot_MatrixLidar/DFRobot_MatrixLidar.cpp",
+        "-o",
+        "/dev/null"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  },
+  {
+    "compile": {
+      "source_path": "/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/libraries/Wire/src/Wire.cpp",
+      "object_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/libraries/Wire/Wire.cpp.o",
+      "depfile_path": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/libraries/Wire/Wire.cpp.d"
+    },
+    "compile_task": {
+      "args": [
+        "/home/bryndon/.arduino15/packages/esp32/tools/esp-x32/2601/bin/xtensa-esp32-elf-g++",
+        "-c",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/cpp_flags",
+        "-w",
+        "-Os",
+        "-Werror=return-type",
+        "-w",
+        "-x",
+        "c++",
+        "-E",
+        "-CC",
+        "-DF_CPU=240000000L",
+        "-DARDUINO=10607",
+        "-DARDUINO_ESP32_DEV",
+        "-DARDUINO_ARCH_ESP32",
+        "-DARDUINO_BOARD=\"ESP32_DEV\"",
+        "-DARDUINO_VARIANT=\"esp32\"",
+        "-DARDUINO_PARTITION_default",
+        "-DARDUINO_HOST_OS=\"linux\"",
+        "-DARDUINO_FQBN=\"esp32:esp32:esp32\"",
+        "-DESP32=ESP32",
+        "-DCORE_DEBUG_LEVEL=0",
+        "-DARDUINO_RUNNING_CORE=1",
+        "-DARDUINO_EVENT_RUNNING_CORE=1",
+        "-DARDUINO_USB_CDC_ON_BOOT=0",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/defines",
+        "-I/home/bryndon/Devel/cpp/cpse-pathfinder/cane/src",
+        "-iprefix",
+        "/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/",
+        "@/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/flags/includes",
+        "-I/home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/qio_qspi/include",
+        "-I/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/cores/esp32",
+        "-I/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/variants/esp32",
+        "-I/home/bryndon/Arduino/libraries/DFRobot_MatrixLidar",
+        "-I/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/libraries/Wire/src",
+        "@/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/build_opt.h",
+        "@/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/file_opts",
+        "/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/libraries/Wire/src/Wire.cpp",
+        "-o",
+        "/dev/null"
+      ]
+    }
+  },
+  {
+    "missing_include_h": ""
+  }
+]

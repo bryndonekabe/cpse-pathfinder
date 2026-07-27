@@ -1,0 +1,167 @@
+#include "../include/websocket.hpp"
+#include "../include/main.hpp"
+#include <ArduinoJson.h>
+#include <AsyncTCP.h>
+#include <ESPAsyncWebServer.h>
+#include <WiFi.h>
+// Network credentials
+const char *ssid = "USG-Mobility";
+const char *password = "shadygrove9631";
+// Server and WebSocket objects on Port 8765
+AsyncWebServer server(8765);
+AsyncWebSocket ws("/");
+// Timing variable for data broadcast
+unsigned long lastBroadcast = 0;
+const long interval = 3000; // 3 seconds
+
+// 1. HANDLE INCOMING JSON DATA
+void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
+  AwsFrameInfo *info = (AwsFrameInfo *)arg;
+  if (info->final && info->index == 0 && info->len == len &&
+      info->opcode == WS_TEXT) {
+    data[len] = 0; // Null-terminate the string safely
+    String message = (char *)data;
+
+    // Allocate JSON document
+    JsonDocument doc;
+    DeserializationError error = deserializeJson(doc, message);
+
+    if (error) {
+      Serial.print(F("JSON Deserialization failed: "));
+      Serial.println(error.f_str());
+      return;
+    }
+
+    Serial.printf("Got JSON: %s\n", message.c_str());
+
+    // Extract incoming key-value pairs
+    // if (doc.containsKey("ledState")) {
+    // bool ledState = doc["ledState"];
+    //  digitalWrite(LED_BUILTIN, ledState ? HIGH : LOW);
+    //  Serial.printf("LED state updated to: %s\n", ledState ? "ON" : "OFF");
+    //}
+  }
+}
+
+// 2. WEBSOCKET EVENT ROUTER
+void on_event(AsyncWebSocket *server, AsyncWebSocketClient *client,
+              AwsEventType type, void *arg, uint8_t *data, size_t len) {
+  switch (type) {
+  case WS_EVT_CONNECT:
+    Serial.printf("WebSocket client #%u connected from %s\n", client->id(),
+                  client->remoteIP().toString().c_str());
+    break;
+  case WS_EVT_DISCONNECT:
+    Serial.printf("WebSocket client #%u disconnected\n", client->id());
+    break;
+  case WS_EVT_DATA:
+    handleWebSocketMessage(arg, data, len);
+    break;
+  case WS_EVT_PONG:
+  case WS_EVT_ERROR:
+    break;
+  }
+}
+
+float random_float(float min, float max) {
+  return min + (random(0, 10000) / 10000.0f) * (max - min);
+}
+
+String sensor_json() {
+  JsonDocument packet;
+
+  JsonObject motors = packet.createNestedObject("motors");
+  motors["left"] = random_float(0, 1);
+  motors["right"] = random_float(0, 1);
+  /* motors  : {
+      left : rand_range(0, 1),
+      right : rand_range(0, 1)
+    }, */
+
+  JsonObject diagnostics = packet.createNestedObject("diagnostics");
+  diagnostics["cpu"] = random_float(20, 60);
+  diagnostics["battery"] = random_float(50, 100);
+  diagnostics["refresh_rate"] = 30;
+  diagnostics["speed"] = random_float(0, 1);
+  diagnostics["bottleneck"] = "none";
+  diagnostics["uptime"] = millis();
+  diagnostics["temp"] = random_float(35, 50);
+  diagnostics["signal"] = random_float(-70, -40);
+  /* diagnostics : {
+      cpu: rand_range(20, 60),
+      battery: rand_range(50, 100),
+      refresh_rate: 30,
+      speed: rand_range(0, 1),
+      bottleneck: "none",
+      uptime: process.uptime(),
+      temp: rand_range(35, 50),
+      signal: rand_range(-70, -40),
+    }, */
+
+  JsonArray updates = packet.createNestedArray("updates");
+  for (int i = 0; i < 64; ++i) {
+    uint16_t d = buf[i];
+    if (d == 4000)
+      continue;
+    JsonObject update = updates.createNestedObject();
+    update["i"] = i;
+    update["d"] = (double)d / (double)1000.0f;
+  }
+  /* updates : new Array(64).fill({i : 0, d : 0}).map(function(val, i) {
+      return {i : rand_int(0, 63), d : rand_range(0, 3.5)};
+    }), */
+
+  packet["timestamp"] = millis();
+  /* timestamp : Date.now(), */
+
+  String json_str;
+  serializeJson(packet, json_str);
+  return json_str;
+}
+
+// 3. BROADCAST OUTGOING JSON DATA
+void broadcastSensorData() {
+  // JsonDocument packet;
+  // JsonDocument diagnostics;
+
+  // diagnostics["uptime"] = millis() / 1000;
+
+  // packet["diagnostics"] = diagnostics;
+  // packet["timestamp"] = random(0, 10);
+
+  // Populate mock sensor values
+  // doc["temperature"] = random(200, 300) / 10.0; // 20.0 to 30.0 °C
+  // doc["humidity"] = random(40, 70);             // 40% to 70%
+
+  // Broadcast text string to all connected web clients
+  String json_str = sensor_json();
+  Serial.printf("JSON: %s\n", json_str.c_str());
+  ws.textAll(json_str);
+}
+
+void ws_setup() {
+  // Connect to Wi-Fi
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.printf("\nConnected! IP Address: %s\n",
+                WiFi.localIP().toString().c_str());
+
+  // Attach WebSocket handlers
+  ws.onEvent(on_event);
+  server.addHandler(&ws);
+
+  // Start the server
+  server.begin();
+}
+
+void ws_loop() {
+  ws.cleanupClients();
+  // Send sensor data periodically without blocking the main loop
+  if (millis() - lastBroadcast >= interval) {
+    lastBroadcast = millis();
+    broadcastSensorData();
+  }
+}

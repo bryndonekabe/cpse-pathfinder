@@ -1,0 +1,31 @@
+/home/bryndon/Devel/cpp/cpse-pathfinder/cane/build/core/esp32-hal-periman.c.o: \
+ /home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/cores/esp32/esp32-hal-periman.c \
+ /home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/cores/esp32/esp32-hal-log.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/qio_qspi/include/sdkconfig.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/esp_timer/include/esp_timer.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/newlib/platform_include/stdio.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/esp_common/include/esp_err.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/esp_common/include/esp_compiler.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/esp_hw_support/include/esp_etm.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/esp_rom/esp32/include/esp32/rom/ets_sys.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/log/include/esp_log.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/esp_rom/include/esp_rom_sys.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/soc/esp32/include/soc/reset_reasons.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/soc/esp32/include/soc/soc_caps.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/log/include/esp_log_config.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/log/include/esp_log_level.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/esp_common/include/esp_assert.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/log/include/esp_log_color.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/log/include/esp_log_buffer.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/log/include/esp_log_timestamp.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/log/include/esp_log_write.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/log/include/esp_log_format.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/log/include/esp_log_args.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/esp_common/include/esp_macros.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/esp_common/include/esp_assert.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/log/include/esp_log_attr.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/esp_common/include/esp_attr.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/log/include/esp_private/log_attr.h \
+ /home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/cores/esp32/esp32-hal-periman.h \
+ /home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10/cores/esp32/esp32-hal-ldo.h \
+ /home/bryndon/.arduino15/packages/esp32/tools/esp32-libs/3.3.10/include/esp_common/include/esp_bit_defs.h
