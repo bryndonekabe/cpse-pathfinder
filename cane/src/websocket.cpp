@@ -4,6 +4,7 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <WiFi.h>
+
 // Network credentials
 const char *ssid = "USG-Mobility";
 const char *password = "shadygrove9631";
@@ -12,7 +13,7 @@ AsyncWebServer server(8765);
 AsyncWebSocket ws("/");
 // Timing variable for data broadcast
 unsigned long lastBroadcast = 0;
-const long interval = 3000; // 3 seconds
+const long interval = 1000; // 3 seconds
 
 // 1. HANDLE INCOMING JSON DATA
 void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
@@ -100,11 +101,25 @@ String sensor_json() {
 
   JsonArray updates = packet.createNestedArray("updates");
   for (int i = 0; i < 64; ++i) {
-    uint16_t d = buf[i];
-    if (d == 4000)
+    uint16_t prev_d = tof_left.prev()[i];
+    uint16_t d = tof_left.buf()[i];
+    if (d == 4000 || prev_d == d)
       continue;
     JsonObject update = updates.createNestedObject();
-    update["i"] = i;
+    int row = i / 8;
+    int col = i % 8;
+    update["i"] = row * 16 + col;
+    update["d"] = (double)d / (double)1000.0f;
+  }
+  for (int i = 0; i < 64; ++i) {
+    uint16_t prev_d = tof_right.prev()[i];
+    uint16_t d = tof_right.buf()[i];
+    if (d == 4000 || prev_d == d)
+      continue;
+    JsonObject update = updates.createNestedObject();
+    int row = i / 8;
+    int col = i % 8;
+    update["i"] = row * 16 + (col + 8);
     update["d"] = (double)d / (double)1000.0f;
   }
   /* updates : new Array(64).fill({i : 0, d : 0}).map(function(val, i) {

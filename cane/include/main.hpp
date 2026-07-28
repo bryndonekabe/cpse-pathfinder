@@ -1,8 +1,10 @@
 #pragma once
 // main.hpp
+#include "../include/TOFSensor.hpp"
 #include <Arduino.h>
 
 void main_setup();
 void main_loop();
 
-extern uint16_t buf[64]; // Data from a total of 64 points
+extern TOFSensor tof_left;
+extern TOFSensor tof_right;

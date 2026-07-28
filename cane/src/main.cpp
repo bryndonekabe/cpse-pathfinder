@@ -1,25 +1,22 @@
 #include "../include/main.hpp"
-#include "DFRobot_MatrixLidar.h"
+#include <Wire.h>
 
-DFRobot_MatrixLidar_I2C tof(0x33); // Default I2C address 0x33
-uint16_t buf[64] = {};             // Data from a total of 64 points
-
+TOFSensor tof_left{0x32};
+TOFSensor tof_right{0x33};
 void main_setup() {
   Serial.begin(115200); // Set the serial communication baud rate to 115200
-  while (tof.begin() != 0) {
-    Serial.println("begin err");
-  }
-  Serial.println("begin success");
-  // config matrix mode
-  while (tof.setRangingMode(eMatrix_8X8) != 0) { // Set to 8*8 mode
-    Serial.println("init error !!!!!");
-    delay(1000);
-  }
-  Serial.println("init success");
+
+  // Wire.begin(21, 22);
+  // Wire.setClock(10000);
+
+  tof_left.init();
+  tof_right.init();
 }
 
 void main_loop() {
-  tof.getAllData(buf);
+  tof_left.get_data();
+  tof_right.get_data();
+
   // for (uint8_t i = 0; i < 8; i++) {
   //   Serial.print("Y");
   //   Serial.print(i);
@@ -32,6 +29,6 @@ void main_loop() {
   //   Serial.println("");
   // }
   // Serial.println("------------------------------");
-  delay(100); // Setting this time allows adjustment of the interval for reading
-              // distances.
+  // delay(100); // Setting this time allows adjustment of the interval for
+  // reading distances.
 }
