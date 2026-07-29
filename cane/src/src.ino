@@ -7,11 +7,16 @@
 #include "../include/websocket.hpp"
 void setup() {
   main_setup();
+  Serial.println("TOF:");
   tof_setup();
+  Serial.println("IMU:");
   imu_setup();
+  Serial.println("Motor:");
   motor_setup();
-  /* ws_setup(); */
-  /* bt_setup(); */
+  Serial.println("Websocket:");
+  ws_setup();
+  Serial.println("Bluetooth:");
+  bt_setup();
   /* speaker_setup(); */
 }
 
@@ -20,6 +25,6 @@ void loop() {
   tof_loop();
   imu_loop();
   motor_loop();
-  /* ws_loop(); */
+  ws_loop();
   /* speaker_loop(); */
 }

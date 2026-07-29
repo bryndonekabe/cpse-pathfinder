@@ -1,4 +1,5 @@
 #include "../include/websocket.hpp"
+#include "../include/config.hpp"
 #include "../include/main.hpp"
 #include <ArduinoJson.h>
 #include <AsyncTCP.h>
@@ -6,15 +7,9 @@
 #include <WiFi.h>
 
 // Network credentials
-const char *ssid = "USG-Mobility";
-const char *password = "shadygrove9631";
 // Server and WebSocket objects on Port 8765
-AsyncWebServer server(8765);
-AsyncWebSocket ws("/");
 // Timing variable for data broadcast
 unsigned long lastBroadcast = 0;
-const long interval = 1000; // 3 seconds
-
 // 1. HANDLE INCOMING JSON DATA
 void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
   AwsFrameInfo *info = (AwsFrameInfo *)arg;
@@ -156,7 +151,7 @@ void broadcastSensorData() {
 
 void ws_setup() {
   // Connect to Wi-Fi
-  WiFi.begin(ssid, password);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
@@ -175,7 +170,7 @@ void ws_setup() {
 void ws_loop() {
   ws.cleanupClients();
   // Send sensor data periodically without blocking the main loop
-  if (millis() - lastBroadcast >= interval) {
+  if (millis() - lastBroadcast >= WS_INTERVAL) {
     lastBroadcast = millis();
     broadcastSensorData();
   }

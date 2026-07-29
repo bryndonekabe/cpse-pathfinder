@@ -1,22 +1,11 @@
 #include "../include/bluetooth.hpp"
+#include "../include/main.hpp"
 #include "../include/no_respect_raw.hpp"
-#include "BluetoothA2DPSource.h"
 #include <Arduino.h>
-#include <Preferences.h>
 #include <math.h>
 
-// constexpr float SAMPLE_RATE = 44100.0f;
-// constexpr float FREQ = 440.0f;
-// constexpr int16_t AMPLITUDE = 12000;
-// static float phase = 0.0f;
-// const uint8_t *audio = no_respect_raw;
-// const size_t audio_len = no_respect_raw_len;
-
-Preferences prefs;
-esp_bd_addr_t saved_device;
 // esp_bd_addr_t is 6 bytes
 constexpr size_t SIZEOF_ADDR = sizeof(esp_bd_addr_t);
-
 void bt_key(char *buf, int i) { sprintf(buf, "mac%d", i); }
 void save_device(esp_bd_addr_t addr) {
   prefs.begin("bt_devices", false);
@@ -34,7 +23,6 @@ void save_device(esp_bd_addr_t addr) {
 
   prefs.end();
 }
-
 void load_device() {
   prefs.begin("bt_devices", true);
 
@@ -47,8 +35,8 @@ void load_device() {
   Serial.println("Device loaded");
 }
 
-static size_t offset = 0;
 int32_t get_sound_data(Frame *data, int32_t len) {
+  static size_t offset = 0;
   for (int i = 0; i < len; i++) {
     if (offset >= no_respect_raw_len) {
       offset = 0;
@@ -66,8 +54,6 @@ int32_t get_sound_data(Frame *data, int32_t len) {
 }
 
 // a2dp callbacks
-BluetoothA2DPSource a2dp_source;
-
 // Callback function executed whenever a Bluetooth device is discovered
 esp_bd_addr_t best_addr;
 int best_rssi = -127;

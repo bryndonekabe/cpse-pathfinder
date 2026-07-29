@@ -1,8 +1,6 @@
-#include "../include/tof.hpp"
+#include "../include/main.hpp"
 #include <Wire.h>
 
-TOFSensor tof_left{0x32};
-TOFSensor tof_right{0x33};
 void tof_setup() {
 
   // Wire.begin(21, 22);
