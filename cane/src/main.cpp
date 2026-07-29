@@ -9,8 +9,8 @@ void main_setup() {
   // Wire.begin(21, 22);
   // Wire.setClock(10000);
 
-  tof_left.init();
-  tof_right.init();
+  // tof_left.init();
+  // tof_right.init();
 }
 
 void main_loop() {
