@@ -131,7 +131,7 @@ void bt_setup() {
   load_device();
 
   a2dp_source.start("ESP32_Audio_Source");
-  Serial.println("Scanning for A2DP sinks...");
+  Serial.println("Bluetooth: Scanning for A2DP sinks...");
 }
 void bt_loop() {
   // The library handles audio streaming and background tasks automatically
