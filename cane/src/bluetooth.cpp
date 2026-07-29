@@ -54,10 +54,7 @@ int32_t get_sound_data(Frame *data, int32_t len) {
       offset = 0;
     }
 
-    uint8_t lo = pgm_read_byte(&no_respect_raw[offset]);
-    uint8_t hi = pgm_read_byte(&no_respect_raw[offset + 1]);
-
-    int16_t sample = (int16_t)(lo | (hi << 8));
+    int16_t sample = pgm_read_word(&no_respect_raw[offset]);
 
     offset += 2;
 
@@ -128,6 +125,9 @@ void bt_setup() {
   a2dp_source.set_on_audio_state_changed(audio_state_callback);
   a2dp_source.set_data_callback_in_frames(get_sound_data);
 
+  // IMPORTANT NOTE: this takes stereo 44.1 khz PCM. we cant use the mono ->
+  // stereo trick here, since L/R channels must be interleaved
+  // a2dp_source.set_data_source(stream);
   load_device();
 
   a2dp_source.start("ESP32_Audio_Source");

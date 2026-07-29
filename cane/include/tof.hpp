@@ -1,5 +1,4 @@
 #pragma once
-
 #include "DFRobot_MatrixLidar.h"
 
 class TOFSensor {
@@ -32,3 +31,6 @@ public:
   const uint16_t *prev() { return prev_buf; }
   const uint16_t *buf() { return curr_buf; }
 };
+
+void tof_setup();
+void tof_loop();

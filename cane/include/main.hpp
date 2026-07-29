@@ -1,6 +1,6 @@
 #pragma once
 // main.hpp
-#include "../include/TOFSensor.hpp"
+#include "../include/tof.hpp"
 #include <Arduino.h>
 
 void main_setup();
