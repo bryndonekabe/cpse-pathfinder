@@ -7,15 +7,15 @@
 // tof sensors
 #define TOF_LEFT_ADDR 0x32
 #define TOF_RIGHT_ADDR 0x33
-// yaw pitch roll
+// yaw pitch roll (in degrees)
 #define TOF_LEFT_YPR dvec3(-30.0, 0, 0)
 #define TOF_RIGHT_YPR dvec3(-30.0, 0, 0)
-
 #define TOF_MAT_HEIGHT 8
 #define TOF_MAT_WIDTH 8
-#define TOF_MAT_ELEMENTS 64
+#define TOF_MAT_ELEMENTS (TOF_MAT_HEIGHT * TOF_MAT_WIDTH)
 #define TOF_FOV_H_DEG 60.0
 #define TOF_FOV_V_DEG 60.0
+#define TOF_DEPTH_INVALID 4000
 
 // vibration motor pin
 #define MOTOR1_PIN 12
