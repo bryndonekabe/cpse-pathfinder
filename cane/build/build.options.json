@@ -1,9 +1,0 @@
-{
-  "additionalFiles": "../..",
-  "compiler.optimization_flags": "-Os",
-  "customBuildProperties": "",
-  "fqbn": "esp32:esp32:esp32",
-  "hardwareFolders": "/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10,/home/bryndon/.arduino15/packages/esp32/hardware/esp32/3.3.10",
-  "otherLibrariesFolders": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/libs,/home/bryndon/Arduino/libraries",
-  "sketchLocation": "/home/bryndon/Devel/cpp/cpse-pathfinder/cane/src"
-}
