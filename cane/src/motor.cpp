@@ -3,7 +3,7 @@
 
 void motor_setup() { motor1.init(); }
 void motor_loop() {
-  static int i = 0;
-  ++i;
-  motor1.set_intensity(i % 255);
+  static uint8_t i = 0;
+  i += 5;
+  motor1.set_intensity(i);
 }

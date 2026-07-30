@@ -4,8 +4,8 @@
 Preferences prefs;
 
 // tof sensors
-TOFSensor tof_left{TOF_LEFT_ADDR};
-TOFSensor tof_right{TOF_RIGHT_ADDR};
+TOFSensor tof_left{TOF_LEFT_ADDR, TOF_LEFT_YPR};
+TOFSensor tof_right{TOF_RIGHT_ADDR, TOF_RIGHT_YPR};
 
 // motor
 Motor motor1{MOTOR1_PIN};

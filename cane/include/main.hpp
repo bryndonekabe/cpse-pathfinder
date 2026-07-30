@@ -21,6 +21,9 @@ extern Preferences prefs;
 extern TOFSensor tof_left;
 extern TOFSensor tof_right;
 
+// runtime
+extern std::vector<dvec3> point_cloud;
+
 // motor
 extern Motor motor1;
 

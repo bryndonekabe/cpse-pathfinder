@@ -1,6 +1,7 @@
 #include "../include/websocket.hpp"
 #include "../include/config.hpp"
 #include "../include/main.hpp"
+#include "../include/runtime.hpp"
 #include <ArduinoJson.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
@@ -63,6 +64,23 @@ float random_float(float min, float max) {
   return min + (random(0, 10000) / 10000.0f) * (max - min);
 }
 
+String point_cloud_json() {
+  JsonDocument packet;
+
+  JsonArray points = packet.createNestedArray("points");
+
+  for (auto &pt : point_cloud) {
+    JsonArray p = points.createNestedArray();
+
+    p.add(pt.x);
+    p.add(pt.y);
+    p.add(pt.z);
+  }
+
+  String output;
+  serializeJson(packet, output);
+  return output;
+}
 String sensor_json() {
   JsonDocument packet;
 
@@ -131,22 +149,19 @@ String sensor_json() {
 
 // 3. BROADCAST OUTGOING JSON DATA
 void broadcastSensorData() {
-  // JsonDocument packet;
-  // JsonDocument diagnostics;
+  uint32_t t = micros();
 
-  // diagnostics["uptime"] = millis() / 1000;
+  Serial.printf("json generation: %lu us\n", micros() - t);
 
-  // packet["diagnostics"] = diagnostics;
-  // packet["timestamp"] = random(0, 10);
-
-  // Populate mock sensor values
-  // doc["temperature"] = random(200, 300) / 10.0; // 20.0 to 30.0 °C
-  // doc["humidity"] = random(40, 70);             // 40% to 70%
+  t = micros();
 
   // Broadcast text string to all connected web clients
   String json_str = sensor_json();
-  Serial.printf("JSON: %s\n", json_str.c_str());
+  // String json_str = point_cloud_json();
+  // Serial.printf("JSON: %s\n", json_str.c_str());
+  Serial.printf("JSON\n");
   ws.textAll(json_str);
+  Serial.printf("ws send: %lu us\n", micros() - t);
 }
 
 void ws_setup() {
