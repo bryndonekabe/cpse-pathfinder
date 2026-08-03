@@ -11,6 +11,9 @@ TOFSensor tof_right{TOF_RIGHT_ADDR, TOF_RIGHT_YPR};
 Motor motor_left{MOTOR_LEFT_PIN};
 Motor motor_right{MOTOR_RIGHT_PIN};
 
+extern double threshold_near_mm = VIBRATION_NEAR_PLANE_MM;
+extern double threshold_far_mm = VIBRATION_FAR_PLANE_MM;
+
 // imu
 IMU imu{IMU_ADDR};
 

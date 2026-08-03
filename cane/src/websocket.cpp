@@ -1,11 +1,20 @@
 #include "../include/websocket.hpp"
 #include "../include/config.hpp"
 #include "../include/main.hpp"
+#include "../include/motor.hpp"
 #include "../include/runtime.hpp"
 #include <ArduinoJson.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <WiFi.h>
+
+void handle_user_settings(JsonObject &settings) {
+  double near_m = settings["threshold_near"];
+  double far_m = settings["threshold_far"];
+
+  threshold_near_mm = near_m * 1000.0;
+  threshold_far_mm = far_m * 1000.0;
+}
 
 // Network credentials
 // Server and WebSocket objects on Port 8765
@@ -32,6 +41,13 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
     Serial.printf("Got JSON: %s\n", message.c_str());
 
     // Extract incoming key-value pairs
+    if (doc.containsKey("command")) {
+      String cmd = doc["command"];
+      if (cmd == "settings") {
+        JsonObject settings = doc["settings"];
+        handle_user_settings(settings);
+      }
+    }
     // if (doc.containsKey("ledState")) {
     // bool ledState = doc["ledState"];
     //  digitalWrite(LED_BUILTIN, ledState ? HIGH : LOW);
@@ -85,8 +101,9 @@ String sensor_json() {
   JsonDocument packet;
 
   JsonObject motors = packet.createNestedObject("motors");
-  motors["left"] = random_float(0, 1);
-  motors["right"] = random_float(0, 1);
+
+  motors["left"] = motor_left.get_intensity() / 255.0;
+  motors["right"] = motor_right.get_intensity() / 255.0;
   /* motors  : {
       left : rand_range(0, 1),
       right : rand_range(0, 1)

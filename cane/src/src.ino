@@ -20,8 +20,8 @@ void setup() {
   Serial.println("Runtime:");
   rt_setup();
 
-  /* Serial.println("Websocket:"); */
-  /* ws_setup(); */
+  Serial.println("Websocket:");
+  ws_setup();
   /* Serial.println("Bluetooth:"); */
   /* bt_setup(); */
   /* speaker_setup(); */
@@ -35,7 +35,7 @@ void loop() {
 
   rt_loop();
 
-  /* ws_loop(); */
+  ws_loop();
   /* bt_loop(); */
   /* speaker_loop(); */
 }

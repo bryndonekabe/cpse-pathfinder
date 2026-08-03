@@ -28,6 +28,9 @@ extern std::vector<dvec3> point_cloud;
 extern Motor motor_left;
 extern Motor motor_right;
 
+extern double threshold_near_mm;
+extern double threshold_far_mm;
+
 // imu
 extern IMU imu;
 

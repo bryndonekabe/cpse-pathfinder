@@ -129,8 +129,10 @@ void hydrate_zones() {
 double linear_intensity(double dist) {
   // NOTE: these are the near and far planes for the
   // sensor vibrations
-  constexpr double MIN = VIBRATION_NEAR_PLANE_MM;
-  constexpr double MAX = VIBRATION_FAR_PLANE_MM;
+  const double MIN = threshold_near_mm;
+  const double MAX = threshold_far_mm;
+  // constexpr double MIN = VIBRATION_NEAR_PLANE_MM;
+  // constexpr double MAX = VIBRATION_FAR_PLANE_MM;
   if (dist == INFINITY)
     return 0.0;
   dist = std::clamp(dist, MIN, MAX);

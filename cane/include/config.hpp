@@ -9,7 +9,7 @@
 #define TOF_RIGHT_ADDR 0x33
 // yaw pitch roll (in degrees)
 #define TOF_LEFT_YPR dvec3(-30.0, 0, 0)
-#define TOF_RIGHT_YPR dvec3(-30.0, 0, 0)
+#define TOF_RIGHT_YPR dvec3(30.0, 0, 0)
 #define TOF_MAT_HEIGHT 8
 #define TOF_MAT_WIDTH 8
 #define TOF_MAT_ELEMENTS (TOF_MAT_HEIGHT * TOF_MAT_WIDTH)
