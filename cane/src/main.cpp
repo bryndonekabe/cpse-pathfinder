@@ -8,7 +8,8 @@ TOFSensor tof_left{TOF_LEFT_ADDR, TOF_LEFT_YPR};
 TOFSensor tof_right{TOF_RIGHT_ADDR, TOF_RIGHT_YPR};
 
 // motor
-Motor motor1{MOTOR1_PIN};
+Motor motor_left{MOTOR_LEFT_PIN};
+Motor motor_right{MOTOR_RIGHT_PIN};
 
 // imu
 IMU imu{IMU_ADDR};

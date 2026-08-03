@@ -2,8 +2,10 @@
 #include "../include/config.hpp"
 #include "../include/main.hpp"
 #include "../include/mat.hpp"
+#include "../include/motor.hpp"
 #include "../include/vec.hpp"
 #include <Arduino.h>
+#include <cmath>
 
 // The coordinate system internally of nanus is right-handed, meaning:
 // + +X = move to the right
@@ -96,11 +98,72 @@ void hydrate_cloud() {
 
 void rt_setup() { generate_rays(); }
 
-void rt_loop() {
-  // hydrate point cloud
-  hydrate_cloud();
+struct Zone {
+  double nearest = INFINITY;
+};
+Zone left, center, right;
+void hydrate_zones() {
+  // left and right fov bounds that define the center
+  static constexpr double LEFT_BOUND = rad(VIBRATION_LEFT_BOUND_DEG);
+  static constexpr double RIGHT_BOUND = rad(VIBRATION_RIGHT_BOUND_DEG);
 
+  left.nearest = INFINITY;
+  center.nearest = INFINITY;
+  right.nearest = INFINITY;
+  for (const dvec3 &p : point_cloud) {
+    // Ignore points behind us.
+    if (p.z >= 0.0)
+      continue;
+    double angle = atan2(p.x, -p.z);
+    double dist = p.length();
+
+    if (angle < LEFT_BOUND) {
+      left.nearest = std::min(left.nearest, dist);
+    } else if (angle > RIGHT_BOUND) {
+      right.nearest = std::min(right.nearest, dist);
+    } else {
+      center.nearest = std::min(center.nearest, dist);
+    }
+  }
+}
+double linear_intensity(double dist) {
+  // NOTE: these are the near and far planes for the
+  // sensor vibrations
+  constexpr double MIN = VIBRATION_NEAR_PLANE_MM;
+  constexpr double MAX = VIBRATION_FAR_PLANE_MM;
+  if (dist == INFINITY)
+    return 0.0;
+  dist = std::clamp(dist, MIN, MAX);
+  return 1.0 - (dist - MIN) / (MAX - MIN);
+}
+double exp_intensity(double dist) {
+  double linear = linear_intensity(dist);
+  return pow(linear, 2.0);
+}
+
+double intensity(double dist) { return exp_intensity(dist); }
+
+void hydrate_motors() {
+  double l = intensity(left.nearest);
+  double c = intensity(center.nearest);
+  double r = intensity(right.nearest);
+
+  // NOTE: currently merging center and left/right nearest values
+  double left_motor_intensity = (l + c) * 0.5;
+  double right_motor_intensity = (r + c) * 0.5;
   // TODO: apply vibration motors
+  motor_left.set_intensity(left_motor_intensity * 255);
+  motor_right.set_intensity(right_motor_intensity * 255);
+
+  Serial.printf("motorl: %i\n", motor_left.get_intensity());
+  Serial.printf("motorr: %i\n", motor_right.get_intensity());
+}
+
+void rt_loop() {
+  hydrate_cloud();
+  hydrate_zones();
+  hydrate_motors();
+
   /*
     NOTE: what i think we should do here is apply vibration
     based on "zones" left, right, center

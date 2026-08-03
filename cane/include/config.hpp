@@ -18,7 +18,14 @@
 #define TOF_DEPTH_INVALID 4000
 
 // vibration motor pin
-#define MOTOR1_PIN 12
+#define MOTOR_LEFT_PIN 12
+#define MOTOR_RIGHT_PIN 14
+
+#define VIBRATION_LEFT_BOUND_DEG -20.0
+#define VIBRATION_RIGHT_BOUND_DEG 20.0
+
+#define VIBRATION_NEAR_PLANE_MM 0.0
+#define VIBRATION_FAR_PLANE_MM 1000.0
 
 // websocket stuff
 #define WIFI_SSID "USG-Mobility"

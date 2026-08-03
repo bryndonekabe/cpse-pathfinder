@@ -17,11 +17,11 @@ void tof_loop() {
 
   tof_left.get_data();
 
-  Serial.printf("left: %lu us\n", micros() - t);
+  // Serial.printf("left: %lu us\n", micros() - t);
 
   t = micros();
 
   tof_right.get_data();
 
-  Serial.printf("right: %lu us\n", micros() - t);
+  // Serial.printf("right: %lu us\n", micros() - t);
 }

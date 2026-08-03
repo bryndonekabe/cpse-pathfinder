@@ -25,7 +25,8 @@ extern TOFSensor tof_right;
 extern std::vector<dvec3> point_cloud;
 
 // motor
-extern Motor motor1;
+extern Motor motor_left;
+extern Motor motor_right;
 
 // imu
 extern IMU imu;
