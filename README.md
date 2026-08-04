@@ -44,8 +44,11 @@ To compile the dashboard code, simply run this command while within the `dashboa
 ```bash
 npm run build
 ```
+
 #### Running 
 To run the code, simply run this command while within the `dashboard` directory:
 ```bash
 npm run dev
 ```
+
+From there, simply navigate to the provided localhost URL, and you're done!
