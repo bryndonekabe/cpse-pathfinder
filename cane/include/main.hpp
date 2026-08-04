@@ -31,6 +31,9 @@ extern Motor motor_right;
 extern double threshold_near_mm;
 extern double threshold_far_mm;
 
+extern double motor_mult_left;
+extern double motor_mult_right;
+
 // imu
 extern IMU imu;
 

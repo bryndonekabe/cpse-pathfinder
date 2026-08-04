@@ -11,9 +11,13 @@
 void handle_user_settings(JsonObject &settings) {
   double near_m = settings["threshold_near"];
   double far_m = settings["threshold_far"];
+  double mult_left = settings["motor_left_mult"];
+  double mult_right = settings["motor_right_mult"];
 
   threshold_near_mm = near_m * 1000.0;
   threshold_far_mm = far_m * 1000.0;
+  motor_mult_left = mult_left;
+  motor_mult_right = mult_right;
 }
 
 // Network credentials
@@ -110,14 +114,14 @@ String sensor_json() {
     }, */
 
   JsonObject diagnostics = packet.createNestedObject("diagnostics");
-  diagnostics["cpu"] = random_float(20, 60);
-  diagnostics["battery"] = random_float(50, 100);
-  diagnostics["refresh_rate"] = 30;
-  diagnostics["speed"] = random_float(0, 1);
+  diagnostics["cpu"] = 30.0;
+  diagnostics["battery"] = 100.0;
+  diagnostics["refresh_rate"] = 30.0;
+  diagnostics["speed"] = 1.0;
   diagnostics["bottleneck"] = "none";
-  diagnostics["uptime"] = millis();
-  diagnostics["temp"] = random_float(35, 50);
-  diagnostics["signal"] = random_float(-70, -40);
+  diagnostics["uptime"] = millis() / 1000.0;
+  diagnostics["temp"] = 40.0;
+  diagnostics["signal"] = -60.0;
   /* diagnostics : {
       cpu: rand_range(20, 60),
       battery: rand_range(50, 100),

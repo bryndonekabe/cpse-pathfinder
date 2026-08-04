@@ -151,11 +151,16 @@ void hydrate_motors() {
   double r = intensity(right.nearest);
 
   // NOTE: currently merging center and left/right nearest values
-  double left_motor_intensity = (l + c) * 0.5;
-  double right_motor_intensity = (r + c) * 0.5;
+  double left_intensity = (l + c) * 0.5;
+  double right_intensity = (r + c) * 0.5;
   // TODO: apply vibration motors
-  motor_left.set_intensity(left_motor_intensity * 255);
-  motor_right.set_intensity(right_motor_intensity * 255);
+  // motor_left.set_intensity(left_intensity * 255);
+  // motor_right.set_intensity(right_intensity * 255);
+
+  double clamped_l = std::clamp(left_intensity * motor_mult_left, 0.0, 1.0);
+  double clamped_r = std::clamp(right_intensity * motor_mult_right, 0.0, 1.0);
+  motor_left.set_intensity(clamped_l * 255);
+  motor_right.set_intensity(clamped_r * 255);
 
   Serial.printf("motorl: %i\n", motor_left.get_intensity());
   Serial.printf("motorr: %i\n", motor_right.get_intensity());
