@@ -6,22 +6,18 @@ void tof_setup() {
   Wire.setClock(400000);
 
   tof_left.init();
-  delay(100);
+  delay(500);
 
   tof_right.init();
-  delay(100);
+  delay(500);
 }
 
 void tof_loop() {
-  uint32_t t = micros();
+  uint32_t start = micros();
 
   tof_left.get_data();
-
-  Serial.printf("left: %lu us\n", micros() - t);
-
-  t = micros();
-
   tof_right.get_data();
 
-  Serial.printf("right: %lu us\n", micros() - t);
+  uint32_t elapsed = micros() - start;
+  Serial.printf("Read time: %lu us | %.2f Hz\n", elapsed, 1000000.0f / elapsed);
 }

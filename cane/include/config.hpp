@@ -18,8 +18,9 @@
 #define TOF_DEPTH_INVALID 4000
 
 // vibration motor pin
+// NOTE: d11 and d12
 #define MOTOR_LEFT_PIN 12
-#define MOTOR_RIGHT_PIN 14
+#define MOTOR_RIGHT_PIN 11
 
 #define VIBRATION_LEFT_BOUND_DEG -20.0
 #define VIBRATION_RIGHT_BOUND_DEG 20.0
@@ -37,10 +38,15 @@
 // imu stuff
 #define IMU_ADDR 0x69
 
-/* i2s speaker nonsense */
-// Define the I2S port
-#define I2S_PORT I2S_NUM_0
-// Define the GPIO pins matching our wiring diagram
-#define I2S_BCLK_PIN 14
-#define I2S_LRC_PIN 25
-#define I2S_DIN_PIN 26
+// speaker stuff
+// NOTE: dfplayer TX is connected here
+#define SPEAKER_RX_PIN D3
+
+// NOTE: dfplayer RX is connected here
+#define SPEAKER_TX_PIN D4
+
+// NOTE: goes from 0-30
+#define SPEAKER_DEFAULT_VOLUME 25
+
+#define FILE_POWER_ON 2
+#define FILE_WIFI_CONNECTED 3

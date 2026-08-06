@@ -1,4 +1,4 @@
-#include "../include/bluetooth.hpp"
+#include "../include/config.hpp"
 #include "../include/imu.hpp"
 #include "../include/main.hpp"
 #include "../include/motor.hpp"
@@ -12,19 +12,23 @@ void setup() {
 
   Serial.println("TOF:");
   tof_setup();
+
   /* Serial.println("IMU:"); */
   /* imu_setup(); */
+
   Serial.println("Motor:");
   motor_setup();
+
+  Serial.println("Speaker:");
+  speaker_setup();
 
   Serial.println("Runtime:");
   rt_setup();
 
   Serial.println("Websocket:");
   ws_setup();
-  /* Serial.println("Bluetooth:"); */
-  /* bt_setup(); */
-  /* speaker_setup(); */
+
+  df_player.playMp3Folder(FILE_POWER_ON);
 }
 
 void loop() {
@@ -32,10 +36,9 @@ void loop() {
   tof_loop();
   /* imu_loop(); */
   motor_loop();
+  speaker_loop();
 
   rt_loop();
 
   ws_loop();
-  /* bt_loop(); */
-  /* speaker_loop(); */
 }

@@ -1,5 +1,6 @@
 #include "../include/main.hpp"
 #include "../include/config.hpp"
+#include "DFRobotDFPlayerMini.h"
 
 Preferences prefs;
 
@@ -17,6 +18,9 @@ double threshold_far_mm = VIBRATION_FAR_PLANE_MM;
 double motor_mult_left = 1.0;
 double motor_mult_right = 1.0;
 
+// speaker
+DFRobotDFPlayerMini df_player;
+
 // imu
 IMU imu{IMU_ADDR};
 
@@ -24,10 +28,10 @@ IMU imu{IMU_ADDR};
 AsyncWebServer server{WS_PORT};
 AsyncWebSocket ws{WS_EXTENSION};
 
-// bluetooth
-BluetoothA2DPSource a2dp_source;
-esp_bd_addr_t saved_device;
+void main_setup() {
+  Serial.begin(SERIAL_BAUD);
 
-void main_setup() { Serial.begin(SERIAL_BAUD); }
+  delay(1000);
+}
 
 void main_loop() { return; }

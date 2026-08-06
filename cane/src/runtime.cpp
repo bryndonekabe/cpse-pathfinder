@@ -162,8 +162,8 @@ void hydrate_motors() {
   motor_left.set_intensity(clamped_l * 255);
   motor_right.set_intensity(clamped_r * 255);
 
-  Serial.printf("motorl: %i\n", motor_left.get_intensity());
-  Serial.printf("motorr: %i\n", motor_right.get_intensity());
+  // Serial.printf("motorl: %i\n", motor_left.get_intensity());
+  // Serial.printf("motorr: %i\n", motor_right.get_intensity());
 }
 
 void rt_loop() {

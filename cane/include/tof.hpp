@@ -17,12 +17,13 @@ public:
 
     while (tof.begin() != NULL) {
       Serial.println("begin err");
+      delay(500);
     }
     Serial.println("begin success");
     // config matrix mode
     while (tof.setRangingMode(eMatrix_8X8) != 0) { // Set to 8*8 mode
       Serial.println("init error !!!!!");
-      delay(1000);
+      delay(500);
     }
     Serial.println("init success");
   }

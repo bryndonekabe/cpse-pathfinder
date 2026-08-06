@@ -4,7 +4,7 @@
 #include "../include/imu.hpp"
 #include "../include/motor.hpp"
 #include "../include/tof.hpp"
-#include "BluetoothA2DPSource.h"
+#include "DFRobotDFPlayerMini.h"
 #include <Arduino.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
@@ -34,13 +34,12 @@ extern double threshold_far_mm;
 extern double motor_mult_left;
 extern double motor_mult_right;
 
+// speaker
+extern DFRobotDFPlayerMini df_player;
+
 // imu
 extern IMU imu;
 
 // websocket
 extern AsyncWebServer server;
 extern AsyncWebSocket ws;
-
-// bluetooth
-extern esp_bd_addr_t saved_device;
-extern BluetoothA2DPSource a2dp_source;

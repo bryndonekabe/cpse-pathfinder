@@ -29,8 +29,13 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
   AwsFrameInfo *info = (AwsFrameInfo *)arg;
   if (info->final && info->index == 0 && info->len == len &&
       info->opcode == WS_TEXT) {
-    data[len] = 0; // Null-terminate the string safely
-    String message = (char *)data;
+    // data[len] = 0; // Null-terminate the string safely
+    // REMOVE THIS
+    // data[len] = 0;
+
+    String message((const char *)data, len);
+
+    // String message = (char *)data;
 
     // Allocate JSON document
     JsonDocument doc;
@@ -172,7 +177,7 @@ String sensor_json() {
 void broadcastSensorData() {
   uint32_t t = micros();
 
-  Serial.printf("json generation: %lu us\n", micros() - t);
+  // Serial.printf("json generation: %lu us\n", micros() - t);
 
   t = micros();
 
@@ -180,9 +185,9 @@ void broadcastSensorData() {
   String json_str = sensor_json();
   // String json_str = point_cloud_json();
   // Serial.printf("JSON: %s\n", json_str.c_str());
-  Serial.printf("JSON\n");
+  // Serial.printf("JSON\n");
   ws.textAll(json_str);
-  Serial.printf("ws send: %lu us\n", micros() - t);
+  // Serial.printf("ws send: %lu us\n", micros() - t);
 }
 
 void ws_setup() {
