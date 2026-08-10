@@ -2,7 +2,7 @@
 #include <Arduino.h>
 
 class Motor {
-  int addr = NULL;
+  int addr;
   uint8_t last_intensity = 0;
 
 public:

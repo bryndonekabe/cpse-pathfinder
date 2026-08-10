@@ -18,6 +18,9 @@ double threshold_far_mm = VIBRATION_FAR_PLANE_MM;
 double motor_mult_left = 1.0;
 double motor_mult_right = 1.0;
 
+// camera
+SSCMA camera_ai;
+
 // speaker
 DFRobotDFPlayerMini df_player;
 
@@ -25,13 +28,14 @@ DFRobotDFPlayerMini df_player;
 IMU imu{IMU_ADDR};
 
 // websocket
-AsyncWebServer server{WS_PORT};
-AsyncWebSocket ws{WS_EXTENSION};
+AsyncWebServer main_server{MAIN_WS_PORT};
+AsyncWebSocket main_ws{MAIN_WS_EXTENSION};
+AsyncWebSocket preview_ws{PREVIEW_WS_EXTENSION};
 
 void main_setup() {
   Serial.begin(SERIAL_BAUD);
 
-  delay(1000);
+  delay(2000);
 }
 
 void main_loop() { return; }

@@ -1,4 +1,5 @@
 #include "../include/websocket.hpp"
+#include "../include/camera.hpp"
 #include "../include/config.hpp"
 #include "../include/main.hpp"
 #include "../include/motor.hpp"
@@ -8,47 +9,34 @@
 #include <ESPAsyncWebServer.h>
 #include <WiFi.h>
 
+// MAIN WEBSOCKET
 void handle_user_settings(JsonObject &settings) {
   double near_m = settings["threshold_near"];
   double far_m = settings["threshold_far"];
   double mult_left = settings["motor_left_mult"];
   double mult_right = settings["motor_right_mult"];
-
   threshold_near_mm = near_m * 1000.0;
   threshold_far_mm = far_m * 1000.0;
   motor_mult_left = mult_left;
   motor_mult_right = mult_right;
 }
 
-// Network credentials
-// Server and WebSocket objects on Port 8765
 // Timing variable for data broadcast
 unsigned long lastBroadcast = 0;
-// 1. HANDLE INCOMING JSON DATA
-void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
+void main_handle_ws_msg(void *arg, uint8_t *data, size_t len) {
   AwsFrameInfo *info = (AwsFrameInfo *)arg;
   if (info->final && info->index == 0 && info->len == len &&
       info->opcode == WS_TEXT) {
-    // data[len] = 0; // Null-terminate the string safely
-    // REMOVE THIS
-    // data[len] = 0;
-
     String message((const char *)data, len);
-
-    // String message = (char *)data;
-
     // Allocate JSON document
     JsonDocument doc;
     DeserializationError error = deserializeJson(doc, message);
-
     if (error) {
       Serial.print(F("JSON Deserialization failed: "));
       Serial.println(error.f_str());
       return;
     }
-
     Serial.printf("Got JSON: %s\n", message.c_str());
-
     // Extract incoming key-value pairs
     if (doc.containsKey("command")) {
       String cmd = doc["command"];
@@ -57,17 +45,12 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
         handle_user_settings(settings);
       }
     }
-    // if (doc.containsKey("ledState")) {
-    // bool ledState = doc["ledState"];
-    //  digitalWrite(LED_BUILTIN, ledState ? HIGH : LOW);
-    //  Serial.printf("LED state updated to: %s\n", ledState ? "ON" : "OFF");
-    //}
   }
 }
 
 // 2. WEBSOCKET EVENT ROUTER
-void on_event(AsyncWebSocket *server, AsyncWebSocketClient *client,
-              AwsEventType type, void *arg, uint8_t *data, size_t len) {
+void main_on_event(AsyncWebSocket *server, AsyncWebSocketClient *client,
+                   AwsEventType type, void *arg, uint8_t *data, size_t len) {
   switch (type) {
   case WS_EVT_CONNECT:
     Serial.printf("WebSocket client #%u connected from %s\n", client->id(),
@@ -77,7 +60,7 @@ void on_event(AsyncWebSocket *server, AsyncWebSocketClient *client,
     Serial.printf("WebSocket client #%u disconnected\n", client->id());
     break;
   case WS_EVT_DATA:
-    handleWebSocketMessage(arg, data, len);
+    main_handle_ws_msg(arg, data, len);
     break;
   case WS_EVT_PONG:
   case WS_EVT_ERROR:
@@ -85,10 +68,7 @@ void on_event(AsyncWebSocket *server, AsyncWebSocketClient *client,
   }
 }
 
-float random_float(float min, float max) {
-  return min + (random(0, 10000) / 10000.0f) * (max - min);
-}
-
+// NOTE: for debug purposes only really
 String point_cloud_json() {
   JsonDocument packet;
 
@@ -110,7 +90,6 @@ String sensor_json() {
   JsonDocument packet;
 
   JsonObject motors = packet.createNestedObject("motors");
-
   motors["left"] = motor_left.get_intensity() / 255.0;
   motors["right"] = motor_right.get_intensity() / 255.0;
   /* motors  : {
@@ -119,6 +98,7 @@ String sensor_json() {
     }, */
 
   JsonObject diagnostics = packet.createNestedObject("diagnostics");
+  // TODO: these diagnostics?
   diagnostics["cpu"] = 30.0;
   diagnostics["battery"] = 100.0;
   diagnostics["refresh_rate"] = 30.0;
@@ -172,9 +152,8 @@ String sensor_json() {
   serializeJson(packet, json_str);
   return json_str;
 }
-
 // 3. BROADCAST OUTGOING JSON DATA
-void broadcastSensorData() {
+void broadcast_sensor_data() {
   uint32_t t = micros();
 
   // Serial.printf("json generation: %lu us\n", micros() - t);
@@ -186,10 +165,76 @@ void broadcastSensorData() {
   // String json_str = point_cloud_json();
   // Serial.printf("JSON: %s\n", json_str.c_str());
   // Serial.printf("JSON\n");
-  ws.textAll(json_str);
+  main_ws.textAll(json_str);
   // Serial.printf("ws send: %lu us\n", micros() - t);
 }
 
+// PREVIEW WEBSOCKET
+String preview_json() {
+  String image = camera_ai.last_image();
+
+  Serial.printf("Image length: %u\n", image.length());
+
+  JsonDocument packet;
+  packet["image"] = image;
+
+  String json_str;
+  serializeJson(packet, json_str);
+
+  Serial.printf("Preview JSON length: %u\n", json_str.length());
+
+  return json_str;
+}
+void preview_handle_ws_msg(AsyncWebSocketClient *client, void *arg,
+                           uint8_t *data, size_t len) {
+  AwsFrameInfo *info = (AwsFrameInfo *)arg;
+  if (info->final && info->index == 0 && info->len == len &&
+      info->opcode == WS_TEXT) {
+    String message((const char *)data, len);
+
+    // Allocate JSON document
+    JsonDocument doc;
+    DeserializationError error = deserializeJson(doc, message);
+    if (error) {
+      Serial.print(F("JSON Deserialization failed: "));
+      Serial.println(error.f_str());
+      return;
+    }
+
+    Serial.printf("Got JSON: %s\n", message.c_str());
+
+    // Extract incoming key-value pairs
+    if (doc.containsKey("command")) {
+      String cmd = doc["command"];
+      if (cmd == "request_frame") {
+        // TODO: send base64 string
+        String response = preview_json();
+        Serial.printf("Sending preview: %u bytes\n", response.length());
+        client->text(response);
+        // preview_ws.textAll(preview_json());
+      }
+    }
+  }
+}
+
+void preview_on_event(AsyncWebSocket *server, AsyncWebSocketClient *client,
+                      AwsEventType type, void *arg, uint8_t *data, size_t len) {
+  switch (type) {
+  case WS_EVT_CONNECT:
+    Serial.printf("Preview WebSocket client #%u connected from %s\n",
+                  client->id(), client->remoteIP().toString().c_str());
+    break;
+  case WS_EVT_DISCONNECT:
+    Serial.printf("Preview WebSocket client #%u disconnected\n", client->id());
+    break;
+  case WS_EVT_DATA:
+    preview_handle_ws_msg(client, arg, data, len);
+    break;
+  case WS_EVT_PONG:
+  case WS_EVT_ERROR:
+    break;
+  }
+}
 void ws_setup() {
   // Connect to Wi-Fi
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -201,18 +246,29 @@ void ws_setup() {
                 WiFi.localIP().toString().c_str());
 
   // Attach WebSocket handlers
-  ws.onEvent(on_event);
-  server.addHandler(&ws);
+  main_ws.onEvent(main_on_event);
+  preview_ws.onEvent(preview_on_event);
+
+  main_server.addHandler(&main_ws);
+  main_server.addHandler(&preview_ws);
 
   // Start the server
-  server.begin();
+  main_server.begin();
 }
 
 void ws_loop() {
-  ws.cleanupClients();
-  // Send sensor data periodically without blocking the main loop
-  if (millis() - lastBroadcast >= WS_INTERVAL) {
+  main_ws.cleanupClients();
+
+  // NOTE: preview websocket must be queried via command
+  // preview_ws.cleanupClients();
+
+  // Send sensor data periodically over main server
+  if (millis() - lastBroadcast >= MAIN_WS_INTERVAL) {
     lastBroadcast = millis();
-    broadcastSensorData();
+    uint32_t before = micros();
+    broadcast_sensor_data();
+    uint32_t after = micros();
+
+    Serial.printf("WS broadcast: %lu us \n", after - before);
   }
 }

@@ -9,7 +9,9 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <Preferences.h>
+#include <Seeed_Arduino_SSCMA.h>
 #include <WiFi.h>
+#include <Wire.h>
 
 void main_setup();
 void main_loop();
@@ -34,6 +36,9 @@ extern double threshold_far_mm;
 extern double motor_mult_left;
 extern double motor_mult_right;
 
+// camera
+extern SSCMA camera_ai;
+
 // speaker
 extern DFRobotDFPlayerMini df_player;
 
@@ -41,5 +46,6 @@ extern DFRobotDFPlayerMini df_player;
 extern IMU imu;
 
 // websocket
-extern AsyncWebServer server;
-extern AsyncWebSocket ws;
+extern AsyncWebServer main_server;
+extern AsyncWebSocket main_ws;
+extern AsyncWebSocket preview_ws;

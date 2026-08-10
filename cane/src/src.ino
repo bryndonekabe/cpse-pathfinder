@@ -1,3 +1,4 @@
+#include "../include/camera.hpp"
 #include "../include/config.hpp"
 #include "../include/imu.hpp"
 #include "../include/main.hpp"
@@ -10,14 +11,17 @@
 void setup() {
   main_setup();
 
-  Serial.println("TOF:");
-  tof_setup();
+  /* Serial.println("TOF:"); */
+  /* tof_setup(); */
 
   /* Serial.println("IMU:"); */
   /* imu_setup(); */
 
   Serial.println("Motor:");
   motor_setup();
+
+  Serial.println("Camera:");
+  cam_setup();
 
   Serial.println("Speaker:");
   speaker_setup();
@@ -33,12 +37,18 @@ void setup() {
 
 void loop() {
   main_loop();
-  tof_loop();
+
+  /* tof_loop(); */
+
   /* imu_loop(); */
+
   motor_loop();
+
+  cam_loop();
+
   speaker_loop();
 
-  rt_loop();
+  /* rt_loop(); */
 
   ws_loop();
 }

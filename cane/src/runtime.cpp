@@ -142,9 +142,7 @@ double exp_intensity(double dist) {
   double linear = linear_intensity(dist);
   return pow(linear, 2.0);
 }
-
 double intensity(double dist) { return exp_intensity(dist); }
-
 void hydrate_motors() {
   double l = intensity(left.nearest);
   double c = intensity(center.nearest);
@@ -170,6 +168,10 @@ void rt_loop() {
   hydrate_cloud();
   hydrate_zones();
   hydrate_motors();
+  Serial.printf("L nearest=%.1f C nearest=%.1f R nearest=%.1f | "
+                "L motor=%d R motor=%d\n",
+                left.nearest, center.nearest, right.nearest,
+                motor_left.get_intensity(), motor_right.get_intensity());
 
   /*
     NOTE: what i think we should do here is apply vibration
