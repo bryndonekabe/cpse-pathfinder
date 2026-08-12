@@ -1,6 +1,12 @@
 #pragma once
 #include <Arduino.h>
 
+enum class MotorEquation : uint8_t {
+  Linear,
+  Exponential,
+  Logarithmic,
+  Piecewise
+};
 class Motor {
   int addr;
   uint8_t last_intensity = 0;

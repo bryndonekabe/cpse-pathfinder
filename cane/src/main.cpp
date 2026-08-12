@@ -1,6 +1,7 @@
 #include "../include/main.hpp"
 #include "../include/config.hpp"
 #include "DFRobotDFPlayerMini.h"
+#include <Arduino.h>
 
 Preferences prefs;
 
@@ -18,11 +19,15 @@ double threshold_far_mm = VIBRATION_FAR_PLANE_MM;
 double motor_mult_left = 1.0;
 double motor_mult_right = 1.0;
 
+double piecewise_levels[3] = {VIBRATION_LVL_1_DEFAULT, VIBRATION_LVL_2_DEFAULT,
+                              VIBRATION_LVL_3_DEFAULT};
+MotorEquation motor_equation = MOTOR_EQUATION_DEFAULT;
+
 // camera
 SSCMA camera_ai;
 
 // speaker
-DFRobotDFPlayerMini df_player;
+AudioManager audio_manager{SPEAKER_RX_PIN, SPEAKER_TX_PIN};
 
 // imu
 IMU imu{IMU_ADDR};
@@ -32,10 +37,19 @@ AsyncWebServer main_server{MAIN_WS_PORT};
 AsyncWebSocket main_ws{MAIN_WS_EXTENSION};
 AsyncWebSocket preview_ws{PREVIEW_WS_EXTENSION};
 
+bool last_state = HIGH;
 void main_setup() {
   Serial.begin(SERIAL_BAUD);
-
   delay(2000);
+
+  pinMode(SOFTWARE_RESET_PIN, INPUT_PULLUP);
 }
 
-void main_loop() { return; }
+void main_loop() {
+  bool curr_state = digitalRead(SOFTWARE_RESET_PIN);
+  if (last_state == HIGH && curr_state == LOW) {
+    Serial.println("Restarting...");
+    delay(50);
+    ESP.restart();
+  }
+}

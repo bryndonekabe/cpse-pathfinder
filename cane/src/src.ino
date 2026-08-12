@@ -11,34 +11,45 @@
 void setup() {
   main_setup();
 
-  /* Serial.println("TOF:"); */
-  /* tof_setup(); */
+  Serial.println("Speaker:");
+  speaker_setup();
+
+  audio_manager.queue(FILE_POWER_ON);
+  audio_manager.wait();
+
+  Serial.println("Camera:");
+  cam_setup();
+  audio_manager.queue(FILE_CAM_INIT);
+  audio_manager.wait();
+
+  Serial.println("TOF:");
+  tof_setup();
+  audio_manager.queue(FILE_SENSOR_INIT);
+  audio_manager.wait();
 
   /* Serial.println("IMU:"); */
   /* imu_setup(); */
 
   Serial.println("Motor:");
   motor_setup();
-
-  Serial.println("Camera:");
-  cam_setup();
-
-  Serial.println("Speaker:");
-  speaker_setup();
+  audio_manager.queue(FILE_MOTOR_INIT);
+  audio_manager.wait();
 
   Serial.println("Runtime:");
   rt_setup();
 
   Serial.println("Websocket:");
   ws_setup();
-
-  df_player.playMp3Folder(FILE_POWER_ON);
+  audio_manager.queue(FILE_SERVER_INIT);
+  audio_manager.wait();
 }
 
 void loop() {
   main_loop();
 
-  /* tof_loop(); */
+  speaker_loop();
+
+  tof_loop();
 
   /* imu_loop(); */
 
@@ -46,9 +57,7 @@ void loop() {
 
   cam_loop();
 
-  speaker_loop();
-
-  /* rt_loop(); */
+  rt_loop();
 
   ws_loop();
 }

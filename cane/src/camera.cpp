@@ -1,6 +1,7 @@
 #include "../include/camera.hpp"
 #include "../include/config.hpp"
 #include "../include/main.hpp"
+#include "../include/speaker.hpp"
 
 void print_box(boxes_t &box) {
   Serial.print("target=");
@@ -37,37 +38,10 @@ void cam_info() {
 }
 void cam_setup() { camera_ai.begin(); }
 
-void person_cue() { df_player.playMp3Folder(FILE_PERSON_DETECTED); }
-bool person_detected() {
-  for (auto &box : camera_ai.boxes()) {
-    // if you are a person, and past the confidence threshold
-    if (box.target == CAMERA_TARGET_ID_PERSON &&
-        box.score >= CAMERA_AI_CONFIDENCE_THRESHOLD) {
-      return true;
-    }
-  }
-
-  return false;
-}
-void try_cue() {
-  static bool person_present = false;
-  static unsigned long last_person_seen = 0;
-  if (person_detected()) {
-    last_person_seen = millis();
-
-    if (!person_present) {
-      person_cue();
-      person_present = true;
-    }
-  } else if (millis() - last_person_seen > CAMERA_AI_LOST_TIMEOUT_MS) {
-    person_present = false;
-  }
-}
-
 void cam_loop() {
   // NOTE: last param is if you want to get base64 framebuffer
   if (!camera_ai.invoke(1, CAMERA_AI_FILTER_RESULTS, CAMERA_AI_SHOW_PREVIEW)) {
     cam_info();
-    try_cue();
+    // try_cue();
   }
 }

@@ -10,15 +10,35 @@
 #include <WiFi.h>
 
 // MAIN WEBSOCKET
+MotorEquation get_equation(const String &str) {
+  if (str == "linear") {
+    return MotorEquation::Linear;
+  } else if (str == "exponential") {
+    return MotorEquation::Exponential;
+  } else if (str == "logarithmic") {
+    return MotorEquation::Logarithmic;
+  } else if (str == "piecewise") {
+    return MotorEquation::Piecewise;
+  } else {
+    return MotorEquation::Linear;
+  }
+}
 void handle_user_settings(JsonObject &settings) {
   double near_m = settings["threshold_near"];
   double far_m = settings["threshold_far"];
   double mult_left = settings["motor_left_mult"];
   double mult_right = settings["motor_right_mult"];
+  JsonArray levels = settings["piecewise_levels"];
+  String equation = settings["motor_equation"];
+
   threshold_near_mm = near_m * 1000.0;
   threshold_far_mm = far_m * 1000.0;
   motor_mult_left = mult_left;
   motor_mult_right = mult_right;
+  for (int i = 0; i < 3; ++i) {
+    piecewise_levels[i] = levels[i];
+  }
+  motor_equation = get_equation(equation);
 }
 
 // Timing variable for data broadcast

@@ -3,6 +3,7 @@
 #include "../include/config.hpp"
 #include "../include/imu.hpp"
 #include "../include/motor.hpp"
+#include "../include/speaker.hpp"
 #include "../include/tof.hpp"
 #include "DFRobotDFPlayerMini.h"
 #include <Arduino.h>
@@ -30,17 +31,19 @@ extern std::vector<dvec3> point_cloud;
 extern Motor motor_left;
 extern Motor motor_right;
 
+// modifiers
 extern double threshold_near_mm;
 extern double threshold_far_mm;
-
 extern double motor_mult_left;
 extern double motor_mult_right;
+extern double piecewise_levels[3];
+extern MotorEquation motor_equation;
 
 // camera
 extern SSCMA camera_ai;
 
 // speaker
-extern DFRobotDFPlayerMini df_player;
+extern AudioManager audio_manager;
 
 // imu
 extern IMU imu;
