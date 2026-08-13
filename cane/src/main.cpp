@@ -37,19 +37,23 @@ AsyncWebServer main_server{MAIN_WS_PORT};
 AsyncWebSocket main_ws{MAIN_WS_EXTENSION};
 AsyncWebSocket preview_ws{PREVIEW_WS_EXTENSION};
 
-bool last_state = HIGH;
+bool last_pin_state = HIGH;
 void main_setup() {
   Serial.begin(SERIAL_BAUD);
   delay(2000);
 
   pinMode(SOFTWARE_RESET_PIN, INPUT_PULLUP);
+  last_pin_state = digitalRead(SOFTWARE_RESET_PIN);
 }
 
 void main_loop() {
   bool curr_state = digitalRead(SOFTWARE_RESET_PIN);
-  if (last_state == HIGH && curr_state == LOW) {
+  // check if pressed
+  if (last_pin_state == HIGH && curr_state == LOW) {
     Serial.println("Restarting...");
     delay(50);
     ESP.restart();
   }
+
+  last_pin_state = curr_state;
 }

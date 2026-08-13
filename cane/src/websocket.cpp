@@ -138,9 +138,13 @@ String sensor_json() {
       signal: rand_range(-70, -40),
     }, */
 
+  static uint16_t prev_tof_left[64];
+  static uint16_t prev_tof_right[64];
+
   JsonArray updates = packet.createNestedArray("updates");
   for (int i = 0; i < 64; ++i) {
-    uint16_t prev_d = tof_left.prev()[i];
+    uint16_t prev_d = prev_tof_left[i];
+    // uint16_t prev_d = tof_left.prev()[i];
     uint16_t d = tof_left.buf()[i];
     if (d == 4000 || prev_d == d)
       continue;
@@ -151,7 +155,8 @@ String sensor_json() {
     update["d"] = (double)d / (double)1000.0f;
   }
   for (int i = 0; i < 64; ++i) {
-    uint16_t prev_d = tof_right.prev()[i];
+    uint16_t prev_d = prev_tof_right[i];
+    // uint16_t prev_d = tof_right.prev()[i];
     uint16_t d = tof_right.buf()[i];
     if (d == 4000 || prev_d == d)
       continue;
@@ -161,6 +166,10 @@ String sensor_json() {
     update["i"] = row * 16 + (col + 8);
     update["d"] = (double)d / (double)1000.0f;
   }
+
+  // set new previous
+  memcpy(prev_tof_left, tof_left.buf(), sizeof(uint16_t) * 64);
+  memcpy(prev_tof_right, tof_right.buf(), sizeof(uint16_t) * 64);
   /* updates : new Array(64).fill({i : 0, d : 0}).map(function(val, i) {
       return {i : rand_int(0, 63), d : rand_range(0, 3.5)};
     }), */

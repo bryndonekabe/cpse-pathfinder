@@ -1,4 +1,7 @@
 # Pathfinder - Confidence in every step
+
+![Pathfinder logo](assets/logo.png)
+
 Pathfinder is a smart cane that utilizes time-of-flight sensors, vibration motors, and audio cues in order to aid visually impaired individuals.
 
 This project was developed over the course of five weeks at the Universities at Shady Grove by four team members, that being:
@@ -9,7 +12,13 @@ This project was developed over the course of five weeks at the Universities at 
 
 This repository contains the entirety of the source code for the CPSE Pathfinder project, both the ESP32 as well as the paired dashboard Vite application. Please note that this code is very rudimentary, and therefore crude, and this is mostly a proof-of-concept / early prototype at best. Also note that the dashboard was developed with the help of Figma Make, an AI assistant for building websites, mostly out of convenience, though the cane code was written by hand.
 
+## Screenshots
+These are some screenshots of the companion dashboard that we developed alongside the main ESP32 code.
+
+![Screenshot of Pathfinder dashboard](assets/screenshot.png)
+
 ## For developers
+
 This section is for developers or individuals looking to recreate this project for themselves, all steps necessary are listed below.
 
 ### Cane

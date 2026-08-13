@@ -3,13 +3,13 @@
 #include "driver/i2s.h"
 
 // reset pin
-#define SOFTWARE_RESET_PIN 6
+#define SOFTWARE_RESET_PIN D6
 // serial baud rate
 #define SERIAL_BAUD 115200
 
 // tof sensors
-#define TOF_LEFT_ADDR 0x32
-#define TOF_RIGHT_ADDR 0x33
+#define TOF_LEFT_ADDR 0x33
+#define TOF_RIGHT_ADDR 0x32
 // yaw pitch roll (in degrees)
 #define TOF_LEFT_YPR dvec3(-30.0, 0, 0)
 #define TOF_RIGHT_YPR dvec3(30.0, 0, 0)
@@ -22,8 +22,8 @@
 
 // vibration motor pin
 // NOTE: d9, and d10
-#define MOTOR_LEFT_PIN 9
-#define MOTOR_RIGHT_PIN 10
+#define MOTOR_LEFT_PIN D9
+#define MOTOR_RIGHT_PIN D10
 
 #define VIBRATION_LEFT_BOUND_DEG -20.0
 #define VIBRATION_RIGHT_BOUND_DEG 20.0
