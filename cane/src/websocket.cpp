@@ -219,6 +219,7 @@ void preview_handle_ws_msg(AsyncWebSocketClient *client, void *arg,
   AwsFrameInfo *info = (AwsFrameInfo *)arg;
   if (info->final && info->index == 0 && info->len == len &&
       info->opcode == WS_TEXT) {
+    static String response;
     String message((const char *)data, len);
 
     // Allocate JSON document
@@ -237,7 +238,7 @@ void preview_handle_ws_msg(AsyncWebSocketClient *client, void *arg,
       String cmd = doc["command"];
       if (cmd == "request_frame") {
         // TODO: send base64 string
-        String response = preview_json();
+        response = preview_json();
         Serial.printf("Sending preview: %u bytes\n", response.length());
         client->text(response);
         // preview_ws.textAll(preview_json());
