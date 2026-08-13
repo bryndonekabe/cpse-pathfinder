@@ -69,7 +69,7 @@ As per most Arduino projects, the entry point starts at `setup()` inside of [src
 We setup all of the subsystems, then we go into `loop()`, which runs each of the subsytems' iterations, similar to `setup()`.
 
 ### Compile-time configuration
-The [configuration file](./include/config.hpp) file is where compile-time configuration is done. You can change defaults, pins, etc. Note that this is a sub-optimal way to perform changes, and you can use the [dashboard](../dashboard/) if you need a faster way you tune values.
+The [configuration file](./include/config.hpp) file is where compile-time configuration is done. You can change defaults, pins, etc. Note that this is a sub-optimal way to perform changes, and you can use the [dashboard](../dashboard/) if you need a faster way to tune values.
 
 ## Prerequisites
 - Arduino IDE and/or corresponding `arduino-cli` commands
