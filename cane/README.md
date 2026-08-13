@@ -2,10 +2,10 @@
 
 ## Project structure
 The cane source code can be split up into logical parts:
-- Hardware interfaces: `tof.cpp`, `motor.cpp`,  `speaker.cpp`, `camera.cpp`, and `imu.cpp`(currently unused)
-- Wireless technologies:`websocket.cpp`
-- Core runtime logic:`runtime.cpp`, `src.ino`
-- Compile-time configuration:`config.hpp`
+- Hardware interfaces: [tof.cpp](./src/tof.cpp), [motor.cpp](./src/motor.cpp),  [speaker.cpp](./src/speaker.cpp), [camera.cpp](./src/camera.cpp), and [imu.cpp](./src/imu.cpp)(currently unused)
+- Wireless technologies: [websocket.cpp](./src/websocket.cpp)
+- Core runtime logic: [runtime.cpp](./src/runtime.cpp), [src.ino](./src/src.ino)
+- Compile-time configuration: [config.hpp](./include/config.hpp)
 
 ## Documentation
 This is an overview and explanation of the code.
