@@ -180,6 +180,19 @@ const TAB_LABELS: Record<Tab,string> = { diag:'Diag', config:'Link', settings:'T
 
 // ─── Main App ─────────────────────────────────────────────────────────────────
 export default function App() {
+  useEffect(() => {
+    document.title = "PathFinder Dashboard";
+    const favicon = document.createElement("link");
+    favicon.rel = "icon";
+    favicon.type = "image/png";
+    favicon.href = "./assets/logo.png";
+
+    document.head.appendChild(favicon);
+
+    return () => {
+      document.head.removeChild(favicon);
+    };
+  }, []);
   // Connection
   const [protocol, setProtocol] = useState<Protocol>('websocket')
   const [wsHost, setWsHost] = useState('192.168.1.100')
