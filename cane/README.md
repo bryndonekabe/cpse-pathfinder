@@ -2,7 +2,7 @@
 
 ## Project structure
 The cane source code can be split up into logical parts:
-- Hardware interfaces: [tof.cpp](./src/tof.cpp), [motor.cpp](./src/motor.cpp),  [speaker.cpp](./src/speaker.cpp), [camera.cpp](./src/camera.cpp), and [imu.cpp](./src/imu.cpp)(currently unused)
+- Hardware interfaces: [tof.cpp](./src/tof.cpp), [motor.cpp](./src/motor.cpp),  [speaker.cpp](./src/speaker.cpp), [camera.cpp](./src/camera.cpp), and [imu.cpp](./src/imu.cpp) (currently unused)
 - Wireless technologies: [websocket.cpp](./src/websocket.cpp)
 - Core runtime logic: [runtime.cpp](./src/runtime.cpp), [src.ino](./src/src.ino)
 - Compile-time configuration: [config.hpp](./include/config.hpp)
@@ -10,7 +10,7 @@ The cane source code can be split up into logical parts:
 ## Documentation
 This is an overview and explanation of the code.
 
-Each subsytem has its own `*_setup()` and `*_loop()` functions, and the rest of the functions used are internal to the system. Each subsytem's public objects are globally declared in `main.hpp` for simplicity (though not great design), and constructed globally in `main.cpp`.
+Each subsytem has its own `*_setup()` and `*_loop()` functions, and the rest of the functions used are internal to the system. Each subsytem's public objects are globally declared in [main.hpp](./include/main.hpp) for simplicity (though not great design), and constructed globally in [main.cpp](./src/main.cpp).
 
 ### Hardware interfaces
 #### Motors
@@ -49,6 +49,8 @@ First, the PathFinder connects to WiFi using the built-in Arduino WiFi library. 
 The bulk of this logic can be found [here](./src/websocket.cpp), and [here](./include/websocket.hpp).
 
 ### Core runtime logic
+The core logic of the PathFinder program
+
 #### Runtime
 PathFinder uses trigonometry to estimate the position of objects in 3D space based off of the two ToF sensors, `tof_left` and `tof_right`, as well as the bounding boxes provided by the camera, using `camera_ai.boxes()`.
 
@@ -57,6 +59,14 @@ The estimated 3D points get pushed into a buffer called `point_cloud`, which is 
 The bounding boxes provided by the camera get converted to estimated 2.5D boxes (no thickness), based on the closest match we can find to a depth value in the point cloud that was previously generated. The closest bounding box is then used to perform audio cues, indicating class/target (person), distance (close, far), and direction (left, right, ahead).
 
 The bulk of this logic can be found [here](./src/runtime.cpp), and [here](./include/runtime.hpp).
+
+#### Main
+In [main.cpp](./src/main.cpp), we do bare-bones level configurations. We initialize the `Serial` object, and set up a way to read for the reset pin, so we can perform software-level resetting.
+
+#### Entry point
+As per most Arduino projects, the entry point starts at `setup()` inside of [src.ino](./src/src.ino).
+
+We setup all of the subsystems, then we go into `loop()`, which runs each of the subsytems' iterations, similar to `setup()`.
 
 ### Compile-time configuration
 The [configuration file](./include/config.hpp) file is where compile-time configuration is done. You can change defaults, pins, etc. Note that this is a sub-optimal way to perform changes, and you can use the [dashboard](../dashboard/) if you need a faster way you tune values.
@@ -79,4 +89,4 @@ To compile the cane code, simply open the project, then click the checkmark icon
 
 To run the code, simply click on the arrow that is to the right of the checkmark icon, this will flash the compiled code to your connected microcontroller. 
 
-Please note that many boards will not be supported.
+Please note that many boards will not be supported due to the dependencies and requirements.
