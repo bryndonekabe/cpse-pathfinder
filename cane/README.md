@@ -3,7 +3,7 @@
 ## Project structure
 The cane source code can be split up into parts:
 - Hardware (`tof.cpp`, `motor.cpp`, `imu.cpp`, `speaker.cpp`)
-- Wireless technologies (`websocket.cpp`, `bluetooth.cpp`)
+- Wireless technologies (`websocket.cpp`)
 - Core runtime logic (`runtime.cpp`)
 - Compile-time configuration (`config.hpp`)
 
