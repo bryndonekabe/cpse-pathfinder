@@ -60,4 +60,6 @@ void loop() {
   rt_loop();
 
   ws_loop();
+
+  Serial.printf("Free heap: %u bytes\n", ESP.getFreeHeap());
 }

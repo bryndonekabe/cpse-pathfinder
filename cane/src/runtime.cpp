@@ -156,12 +156,12 @@ double piecewise_intensity(double dist) {
     return 0.0;
 
   if (dist > 2500.0)
-    return piecewise_levels[0]; // 2.5m–4m, level 1
+    return piecewise_level_one; // 2.5m–4m, level 1
 
   if (dist > 1000.0)
-    return piecewise_levels[1]; // 1m–2.5m, level 2
+    return piecewise_level_two; // 1m–2.5m, level 2
 
-  return piecewise_levels[2]; // 0–1m, level 3
+  return piecewise_level_three; // 0–1m, level 3
 }
 double intensity(double dist) {
   switch (motor_equation) {

@@ -40,8 +40,13 @@ void cam_setup() { camera_ai.begin(); }
 
 void cam_loop() {
   // NOTE: last param is if you want to get base64 framebuffer
-  if (!camera_ai.invoke(1, CAMERA_AI_FILTER_RESULTS, CAMERA_AI_SHOW_PREVIEW)) {
-    cam_info();
-    // try_cue();
+
+  if (xSemaphoreTake(invoke_mutex, portMAX_DELAY) == pdTRUE) {
+    if (!camera_ai.invoke(1, CAMERA_AI_FILTER_RESULTS,
+                          CAMERA_AI_SHOW_PREVIEW)) {
+      cam_info();
+      // try_cue();
+    }
+    xSemaphoreGive(invoke_mutex);
   }
 }

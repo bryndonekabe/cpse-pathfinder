@@ -13,6 +13,9 @@
 #include <Seeed_Arduino_SSCMA.h>
 #include <WiFi.h>
 #include <Wire.h>
+#include <atomic>
+#include <freertos/FreeRTOS.h>
+#include <freertos/semphr.h>
 
 void main_setup();
 void main_loop();
@@ -32,15 +35,21 @@ extern Motor motor_left;
 extern Motor motor_right;
 
 // modifiers
-extern double threshold_near_mm;
-extern double threshold_far_mm;
-extern double motor_mult_left;
-extern double motor_mult_right;
-extern double piecewise_levels[3];
-extern MotorEquation motor_equation;
+extern std::atomic<double> threshold_near_mm;
+extern std::atomic<double> threshold_far_mm;
+extern std::atomic<double> motor_mult_left;
+extern std::atomic<double> motor_mult_right;
+extern std::atomic<double> piecewise_level_one;
+extern std::atomic<double> piecewise_level_two;
+extern std::atomic<double> piecewise_level_three;
+
+extern std::atomic<MotorEquation> motor_equation;
 
 // camera
 extern SSCMA camera_ai;
+// NOTE: we need this mutex to avoid race conditions from the asynchronous
+// servers
+extern SemaphoreHandle_t invoke_mutex;
 
 // speaker
 extern AudioManager audio_manager;

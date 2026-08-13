@@ -31,18 +31,18 @@ void handle_user_settings(JsonObject &settings) {
   JsonArray levels = settings["piecewise_levels"];
   String equation = settings["motor_equation"];
 
-  threshold_near_mm = near_m * 1000.0;
-  threshold_far_mm = far_m * 1000.0;
-  motor_mult_left = mult_left;
-  motor_mult_right = mult_right;
-  for (int i = 0; i < 3; ++i) {
-    piecewise_levels[i] = levels[i];
-  }
-  motor_equation = get_equation(equation);
+  threshold_near_mm.store(near_m * 1000.0);
+  threshold_far_mm.store(far_m * 1000.0);
+  motor_mult_left.store(mult_left);
+  motor_mult_right.store(mult_right);
+  piecewise_level_one.store(levels[0]);
+  piecewise_level_two.store(levels[1]);
+  piecewise_level_three.store(levels[2]);
+  motor_equation.store(get_equation(equation));
 }
 
 // Timing variable for data broadcast
-unsigned long lastBroadcast = 0;
+unsigned long last_broadcast = 0;
 void main_handle_ws_msg(void *arg, uint8_t *data, size_t len) {
   AwsFrameInfo *info = (AwsFrameInfo *)arg;
   if (info->final && info->index == 0 && info->len == len &&
@@ -90,7 +90,8 @@ void main_on_event(AsyncWebSocket *server, AsyncWebSocketClient *client,
 
 // NOTE: for debug purposes only really
 String point_cloud_json() {
-  JsonDocument packet;
+  static JsonDocument packet;
+  packet.clear();
 
   JsonArray points = packet.createNestedArray("points");
 
@@ -107,7 +108,8 @@ String point_cloud_json() {
   return output;
 }
 String sensor_json() {
-  JsonDocument packet;
+  static JsonDocument packet;
+  packet.clear();
 
   JsonObject motors = packet.createNestedObject("motors");
   motors["left"] = motor_left.get_intensity() / 255.0;
@@ -200,11 +202,17 @@ void broadcast_sensor_data() {
 
 // PREVIEW WEBSOCKET
 String preview_json() {
-  String image = camera_ai.last_image();
+  // NOTE: make this a locked call
+  String image;
+  if (xSemaphoreTake(invoke_mutex, portMAX_DELAY) == pdTRUE) {
+    image = camera_ai.last_image();
+    xSemaphoreGive(invoke_mutex);
+  }
 
   Serial.printf("Image length: %u\n", image.length());
 
-  JsonDocument packet;
+  static JsonDocument packet;
+  packet.clear();
   packet["image"] = image;
 
   String json_str;
@@ -293,8 +301,8 @@ void ws_loop() {
   // preview_ws.cleanupClients();
 
   // Send sensor data periodically over main server
-  if (millis() - lastBroadcast >= MAIN_WS_INTERVAL) {
-    lastBroadcast = millis();
+  if (millis() - last_broadcast >= MAIN_WS_INTERVAL) {
+    last_broadcast = millis();
     uint32_t before = micros();
     broadcast_sensor_data();
     uint32_t after = micros();
