@@ -12,10 +12,15 @@ This project was developed over the course of five weeks at the Universities at 
 
 This repository contains the entirety of the source code for the CPSE PathFinder project, both the ESP32 as well as the paired dashboard Vite application. Please note that this code is very rudimentary, and therefore crude, and this is mostly a proof-of-concept / early prototype at best. Also note that the dashboard was developed with the help of Figma Make, an AI assistant for building websites, mostly out of convenience, though the cane code was written by hand.
 
-## Screenshots
-These are some screenshots of the companion dashboard that we developed alongside the main ESP32 code.
+## Images
+### Poster
+This is the poster we presented on Demo Day, illustrating what we problem intended to fix and our goals moving forward with the project:
+![Image of PathFinder's poster](assets/poster.pdf)
 
+### Screenshots
+Here are some screenshots of the companion dashboard that we developed alongside the main ESP32 code:
 ![Screenshot of PathFinder dashboard](assets/screenshot.png)
+
 
 ## For developers
 
@@ -25,4 +30,4 @@ This section is for developers or individuals looking to recreate this project f
 For technical information on the main code, click [here](cane/README.md)
 
 ### Dashboard
-For more information on the companion dashboard, click [here](dashboard/README.md)
+For more information, click [here](dashboard/README.md)
