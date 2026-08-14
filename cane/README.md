@@ -29,7 +29,7 @@ PathFinder uses an AI-powered camera module called the Grove Vision AI V2 by See
 The bulk of this logic can be found [here](./src/camera.cpp), and [here](./include/camera.hpp).
 
 #### Speaker
-PathFinder uses a DFPlayer Mini MP3 by DFRobot, which can be found [here](https://wiki.dfrobot.com/dfr0299/#tech_specs), alongside a single speaker connected to it over SPK +/-. Additionally, the DFPlayer Mini has a FAT32 formatted SD card, the contents of which can be found [here](./data/sdcard/). We use the [DFRobotDFPlayerMini library](./libs/DFRobotDFPlayerMini-master.zip) to connect to the DFPlayer.
+PathFinder uses a DFPlayer Mini MP3 by DFRobot, which can be found [here](https://wiki.dfrobot.com/dfr0299/#tech_specs), alongside a single speaker connected to it over its SPK +/- pins. Additionally, the DFPlayer Mini has a FAT32 formatted SD card, the contents of which can be found [here](./data/sdcard/). We use the [DFRobotDFPlayerMini library](./libs/DFRobotDFPlayerMini-master.zip) to connect to the DFPlayer.
 
 The DFPlayer uses a numbered system that is reflected in the [configuration file](./include/config.hpp) as well as the [SD card setup](./data/sdcard/).
 
