@@ -14,12 +14,12 @@ Each subsytem has its own `*_setup()` and `*_loop()` functions, and the rest of 
 
 ### Hardware interfaces
 #### Motors
-PathFinder uses two pins to control the left and right motors of the cane. We use the built-in `analogWrite` of the Arduino library, but via a [wrapper](./include/tof.hpp).
+PathFinder uses two pins to control the left and right motors of the cane. We use the built-in `analogWrite` of the Arduino library, but via a [wrapper](./include/motor.hpp).
 
 The pin numbers can be found in the [configuration file](./include/config.hpp).
 
 #### ToF Sensors
-PathFinder uses two Time-of-Flight sensors by DFRobot, and can be found [here](https://wiki.dfrobot.com/sen0628/#tech_specs). We use the [DFRobot MatrixLidar library](./libs/DFRobot_MatrixLidar-master.zip) to communicate to both over I2C.
+PathFinder uses two Time-of-Flight LiDAR sensors by DFRobot, and can be found [here](https://wiki.dfrobot.com/sen0628/#tech_specs). We use the [DFRobot MatrixLidar library](./libs/DFRobot_MatrixLidar-master.zip) to communicate to both over I2C.
 
 The bulk of this logic can be found [here](./src/tof.cpp), and [here](./include/tof.hpp).
 
@@ -33,7 +33,7 @@ PathFinder uses a DFPlayer Mini MP3 by DFRobot, which can be found [here](https:
 
 The DFPlayer uses a numbered system that is reflected in the [configuration file](./include/config.hpp) as well as the [SD card setup](./data/sdcard/).
 
-For other subsystems to make use of the audio, they use the `audio_manager` object which has abstractions that allow you to queue and also completely play files via: `AudioManager::queue(uint8_t file)` and `AudioManager::wait()`
+For other subsystems to make use of the audio, they use the `audio_manager` object which has abstractions that allow you to queue and also completely play files via: `AudioManager::queue(uint8_t file)`, `AudioManager::step()`, and `AudioManager::wait()`
 
 The bulk of this logic can be found [here](./src/speaker.cpp), and [here](./include/speaker.hpp).
 
@@ -44,9 +44,18 @@ The bulk of this logic can be found [here](./src/imu.cpp), and [here](./include/
 
 ### Wireless technologies
 #### Wifi / WebSocket clients
-First, the PathFinder connects to WiFi using the built-in Arduino WiFi library. PathFinder uses two asynchronous WebSocket clients, one for the sensor data itself + some diagnostics, and another to send the raw camera output as a Base64 string that can then be rendered on the client side (dashboard). We use [ESPAsyncWebServer](./libs/ESPAsyncWebServer-3.11.2.zip) to start up the asynchronous server, and the asynchronous WebSocket clients using [AsyncTCP](./libs/AsyncTCP-main.zip).
+Before we can get up a server, the PathFinder connects to WiFi using the built-in Arduino WiFi library, you may change the SSID and password via [the configuration file](./include/config.hpp). PathFinder opens an asynchronous WebSocket server on port 8765, and exposes two different handlers:
+
+One for the sensor data itself in addition to some diagnostics, which is accessed at the extension "/". This can also receive commands which will modify certain settings variables that are used for calculations in [the runtime](./src/runtime.cpp). By default, this data is sent at an interval of 500 milliseconds.
+
+Another to send the raw camera output as a Base64 string that can then be rendered on the client side (dashboard). In order to receive a frame, the client sends a JSON command of the form `{"command" : "request_frame"}`. The dashboard sends this command at a constant rate to enforce a sort of frames-per-second, though this shouuld be kept to a minimum as iti s unreliable and can bottleneck the ESP32.
+
+We use [ESPAsyncWebServer](./libs/ESPAsyncWebServer-3.11.2.zip) to start up the asynchronous server, and the WebSocket handlers using [AsyncTCP](./libs/AsyncTCP-main.zip).
 
 The bulk of this logic can be found [here](./src/websocket.cpp), and [here](./include/websocket.hpp).
+
+##### Handling race conditions
+Because of the asynchronous nature of the server, we use atomic operations to handle the settings modified by the server via `std::atomic`, and a mutex via `SemaphoreHandle_t`, aptly named `invoke_mutex` in order to enforce synchronization with `camera_ai` when gathering the Base64 image string. If you do not use this model, you could be susceptible to race conditions, where one thread tried to read from a state **as it is being updated** which can cause a myriad of problems.
 
 ### Core runtime logic
 The core logic of the PathFinder program
