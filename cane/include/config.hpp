@@ -39,7 +39,7 @@
 // camera stuff
 #define CAMERA_AI_FILTER_RESULTS false
 #define CAMERA_AI_SHOW_PREVIEW true
-#define CAMERA_AI_CONFIDENCE_THRESHOLD 60
+#define CAMERA_AI_CONFIDENCE_THRESHOLD 70
 // how long before an object is considered "lost"
 #define CAMERA_AI_LOST_TIMEOUT_MS 1000
 #define CAMERA_TARGET_ID_PERSON 0
@@ -50,6 +50,13 @@
 // NOTE: double check these
 #define CAMERA_AI_FOV_H_DEG 120.0
 #define CAMERA_AI_FOV_V_DEG 90.0
+// yaw pitch roll (in degrees)
+#define CAMERA_AI_YPR dvec3(0.0, 60.0, 0.0)
+
+// 1 ms mutex timeout for the websocket
+#define INVOKE_MUTEX_TIMEOUT_WS 1
+//  0.5 second mutex timeout for the websocket, it gets priority
+#define INVOKE_MUTEX_TIMEOUT_CAMERA 500
 
 // only considered "close" depth within 5 degrees
 #define CAMERA_TOF_MAX_ANGLE_TOLERANCE_DEG 5.0
@@ -68,12 +75,12 @@
 
 // speaker stuff
 // NOTE: dfplayer TX is connected here
-#define SPEAKER_RX_PIN D2
+#define SPEAKER_RX_PIN D1
 // NOTE: dfplayer RX is connected here
 #define SPEAKER_TX_PIN D3
 
 // NOTE: goes from 0-30
-#define SPEAKER_DEFAULT_VOLUME 15
+#define SPEAKER_DEFAULT_VOLUME 20
 
 // NOTE: file mapping based on sdcard layout
 #define FILE_DEFAULT_AUDIO 1
@@ -93,3 +100,5 @@
 #define FILE_CAM_INIT 11
 #define FILE_MOTOR_INIT 12
 #define FILE_SERVER_INIT 13
+
+#define FILE_INIT_COMPLETE 14
