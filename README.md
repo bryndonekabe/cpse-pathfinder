@@ -15,7 +15,7 @@ This repository contains the entirety of the source code for the CPSE PathFinder
 ## Images
 ### Poster
 This is the poster we presented on Demo Day, illustrating what we problem intended to fix and our goals moving forward with the project:
-![Image of PathFinder's poster](assets/poster.pdf)
+![Image of PathFinder's poster](assets/poster.png)
 
 ### Screenshots
 Here are some screenshots of the companion dashboard that we developed alongside the main ESP32 code:
