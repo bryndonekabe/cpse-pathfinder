@@ -2,7 +2,7 @@
 #include <Wire.h>
 
 void tof_setup() {
-  Wire.begin(21, 22);
+  // Wire.begin(22, 21);
   Wire.setClock(400000);
 
   tof_left.init();

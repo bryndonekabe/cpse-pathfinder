@@ -230,6 +230,7 @@ const double CAMERA_CY = (CAMERA_HEIGHT - 1) * 0.5;
 // Focal lengths derived from FOV.
 const double CAMERA_FX = CAMERA_CX / tan(rad(CAMERA_HFOV_DEG) * 0.5);
 const double CAMERA_FY = CAMERA_CY / tan(rad(CAMERA_VFOV_DEG) * 0.5);
+const dvec3 CAMERA_ROT_DEG = CAMERA_AI_YPR;
 // Convert camera pixel -> normalized camera-local ray.
 // +X = right
 // +Y = up
@@ -237,17 +238,25 @@ const double CAMERA_FY = CAMERA_CY / tan(rad(CAMERA_VFOV_DEG) * 0.5);
 dvec3 camera_ray(double px, double py) {
   const double x = (px - CAMERA_CX) / CAMERA_FX;
   const double y = -(py - CAMERA_CY) / CAMERA_FY;
-  dvec3 ray(x, y, -1.0);
+  dvec3 camera_space_ray(x, y, -1.0);
   // --------------------------------------------------
   // TODO: apply camera yaw/pitch/roll here.
   // This converts the ray from camera-local space
   // into world-space
   // --------------------------------------------------
-  // Example eventually:
-  // ray = yaw_pitch_roll_rad(camera_rot_rad) * dvec4(ray, 0.0);
+
+  // convert from degrees -> rad
+  const dvec3 camera_rot_rad = dvec3(
+      rad(CAMERA_ROT_DEG.x), rad(CAMERA_ROT_DEG.y), rad(CAMERA_ROT_DEG.z));
   // Use w = 0 because this is a direction, not a position.
-  // NOTE: currently, it just assumes the camera is facing straight on
-  return ray.normalized();
+  dvec4 world_space_ray =
+      yaw_pitch_roll_rad(camera_rot_rad) * dvec4(camera_space_ray, 0.0);
+
+  // return normalized vec3
+  return dvec3(world_space_ray.x, world_space_ray.y, world_space_ray.z)
+      .normalized();
+
+  // return camera_space_ray.normalized();
 }
 
 constexpr double CAMERA_TOF_MIN_ALIGNMENT =

@@ -21,9 +21,8 @@
 #define TOF_DEPTH_INVALID 4000
 
 // vibration motor pin
-// NOTE: d9, and d10
-#define MOTOR_LEFT_PIN D9
-#define MOTOR_RIGHT_PIN D10
+#define MOTOR_LEFT_PIN D10
+#define MOTOR_RIGHT_PIN D8
 
 #define VIBRATION_LEFT_BOUND_DEG -20.0
 #define VIBRATION_RIGHT_BOUND_DEG 20.0
@@ -39,7 +38,7 @@
 // camera stuff
 #define CAMERA_AI_FILTER_RESULTS false
 #define CAMERA_AI_SHOW_PREVIEW true
-#define CAMERA_AI_CONFIDENCE_THRESHOLD 70
+#define CAMERA_AI_CONFIDENCE_THRESHOLD 65
 // how long before an object is considered "lost"
 #define CAMERA_AI_LOST_TIMEOUT_MS 1000
 #define CAMERA_TARGET_ID_PERSON 0
@@ -51,12 +50,12 @@
 #define CAMERA_AI_FOV_H_DEG 120.0
 #define CAMERA_AI_FOV_V_DEG 90.0
 // yaw pitch roll (in degrees)
-#define CAMERA_AI_YPR dvec3(0.0, 60.0, 0.0)
+#define CAMERA_AI_YPR dvec3(0.0, 0.0, 0.0)
 
 // 1 ms mutex timeout for the websocket
 #define INVOKE_MUTEX_TIMEOUT_WS 1
 //  0.5 second mutex timeout for the websocket, it gets priority
-#define INVOKE_MUTEX_TIMEOUT_CAMERA 500
+#define INVOKE_MUTEX_TIMEOUT_CAMERA 1
 
 // only considered "close" depth within 5 degrees
 #define CAMERA_TOF_MAX_ANGLE_TOLERANCE_DEG 5.0
@@ -75,7 +74,7 @@
 
 // speaker stuff
 // NOTE: dfplayer TX is connected here
-#define SPEAKER_RX_PIN D1
+#define SPEAKER_RX_PIN D0
 // NOTE: dfplayer RX is connected here
 #define SPEAKER_TX_PIN D3
 

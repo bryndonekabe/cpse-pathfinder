@@ -42,6 +42,9 @@ void setup() {
   ws_setup();
   audio_manager.queue(FILE_SERVER_INIT);
   audio_manager.wait();
+
+  audio_manager.queue(FILE_INIT_COMPLETE);
+  audio_manager.wait();
 }
 
 void loop() {
@@ -60,6 +63,4 @@ void loop() {
   rt_loop();
 
   ws_loop();
-
-  Serial.printf("Free heap: %u bytes\n", ESP.getFreeHeap());
 }

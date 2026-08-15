@@ -25,13 +25,13 @@ export const THEMES: Theme[] = [
   {
     id: 'void',
     name: 'Void',
-    bgColor: 0x0e1a28, gridColor: 0x1a3050,
+    bgColor: 0x2c3a4c, gridColor: 0x1a3050,
     nearColor: 0xff2222, midColor: 0xffaa00, farColor: 0x00e5ff,
     motorLeftHue: 180, motorRightHue: 195,
     accent: '#00e5ff', accentDim: '#00b8cc',
     surfaceBg: '#080c10', panelBg: '#0d1520', panelBg2: '#111d2e',
     border: '#1a2d42',
-    text: '#e6f2ff',
+    text: '#ffffff',
     muted: '#8fa8c2',
   },
 

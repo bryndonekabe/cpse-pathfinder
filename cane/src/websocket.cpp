@@ -202,16 +202,19 @@ void broadcast_sensor_data() {
 
 // PREVIEW WEBSOCKET
 String preview_json() {
-  // NOTE: make this a locked call
   String image;
-  if (xSemaphoreTake(invoke_mutex, portMAX_DELAY) == pdTRUE) {
-    image = camera_ai.last_image();
-    xSemaphoreGive(invoke_mutex);
+  if (xSemaphoreTake(invoke_mutex, pdMS_TO_TICKS(INVOKE_MUTEX_TIMEOUT_WS)) !=
+      pdTRUE) {
+    Serial.println("mutex timeout preview json");
+    return R"({"image":""})";
   }
+
+  image = camera_ai.last_image();
+  xSemaphoreGive(invoke_mutex);
 
   Serial.printf("Image length: %u\n", image.length());
 
-  static JsonDocument packet;
+  JsonDocument packet;
   packet.clear();
   packet["image"] = image;
 
